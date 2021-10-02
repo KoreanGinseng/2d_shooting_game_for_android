@@ -12,6 +12,7 @@ using namespace Shooting2D;
 CGameScene::CGameScene()
         : IScene()
         , m_Player()
+        , m_BackGround()
 {
 }
 
@@ -30,6 +31,9 @@ MyS32 CGameScene::Load()
 {
     // プレイヤーの読み込み
     if (m_Player.Load() != k_Success) { return k_failure; }
+    // 背景の読み込み
+    if (m_BackGround.Load() != k_Success) { return k_failure; }
+
     return k_Success;
 }
 
@@ -41,6 +45,9 @@ MyS32 CGameScene::Initialize()
 {
     // プレイヤーの初期化
     m_Player.Initialize();
+    // 背景の初期化
+    m_BackGround.Initialize();
+
     return k_Success;
 }
 
@@ -50,8 +57,11 @@ MyS32 CGameScene::Initialize()
 *******************************************************************************/
 MyS32 CGameScene::Update()
 {
+    // 背景の更新
+    m_BackGround.Update();
     // プレイヤーの更新
     m_Player.Update();
+
     return k_Success;
 }
 
@@ -61,8 +71,11 @@ MyS32 CGameScene::Update()
 *******************************************************************************/
 MyS32 CGameScene::Draw()
 {
+    // 背景の描画
+    m_BackGround.Draw();
     // プレイヤーの描画
     m_Player.Draw();
+
     return k_Success;
 }
 
@@ -72,7 +85,10 @@ MyS32 CGameScene::Draw()
 *******************************************************************************/
 MyS32 CGameScene::Release()
 {
+    // 背景の解放
+    m_BackGround.Release();
     // プレイヤーの解放
     m_Player.Release();
+
     return k_Success;
 }

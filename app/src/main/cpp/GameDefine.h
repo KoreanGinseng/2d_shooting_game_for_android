@@ -18,6 +18,9 @@ namespace Shooting2D
 
     /*! プレイヤー定義 */
 
+    /*! 背景定義 */
+    constexpr MyFloat k_ScrollSpeed     = 5.0f; /*!< 背景スクロールスピード */
+
 }
 
 #endif //GAMEDEFINE_H

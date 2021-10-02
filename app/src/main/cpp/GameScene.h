@@ -8,6 +8,7 @@
 
 #include "IScene.h"
 #include "Player.h"
+#include "BackGround.h"
 
 namespace Shooting2D
 {
@@ -22,6 +23,8 @@ namespace Shooting2D
         /*! プレイヤー */
         CPlayer m_Player;
 
+        /*! 背景 */
+        CBackGround m_BackGround;
     public:
 
         /******************************************************************************/
