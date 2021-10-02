@@ -1,18 +1,78 @@
+/******************************************************************************/
+/*! @file       native-lib.cpp
+    @brief      エントリポイント
+*******************************************************************************/
 #include "DxLib.h"
+#include "GameApplication.h"
+#include "GameDefine.h"
 
-// プログラムは android_main から始まります
-int android_main( void )
+using namespace Shooting2D;
+
+/******************************************************************************/
+/*! @brief android始まりの関数
+    @return         成功 0, 失敗 -1
+******************************************************************************/
+int android_main()
 {
-    if( DxLib_Init() == -1 )		// ＤＸライブラリ初期化処理
+    // ＤＸライブラリ初期化処理
+    if (DxLib::DxLib_Init() == -1)
     {
-        return -1 ;			// エラーが起きたら直ちに終了
+        // エラーが起きたら直ちに終了
+        MyLOGE("lib init error : %ld\n", (MyS32)-1);
+        return -1;
     }
 
-    DrawBox( 220, 140, 420, 340, GetColor( 255,255,255 ), TRUE ) ;	// 四角形を描画する
+    // 画面サイズの設定
+    DxLib::SetGraphMode(k_SceneWidth, k_SceneHeight, k_ColorBitNum);
 
-    WaitKey() ;				// キー入力待ち
+    // 描画先を裏画面にする(ダブルバッファリング)
+    DxLib::SetDrawScreen(DX_SCREEN_BACK);
 
-    DxLib_End() ;				// ＤＸライブラリ使用の終了処理
+    // ゲームアプリケーションの作成
+    CGameApplication gameApplication;
 
-    return 0 ;					// ソフトの終了
+    // ゲームの初期化
+    MyS32 result = gameApplication.Initialize();
+    if (result != k_Success)
+    {
+        MyLOGE("init error : %ld\n", result);
+        return -1;
+    }
+
+    // ゲームループ
+    while (DxLib::ProcessMessage() == 0)
+    {
+        // ゲームの更新
+        result = gameApplication.Update();
+        if (result != k_Success)
+        {
+            MyLOGE("update error : %ld\n", result);
+            break;
+        }
+
+        // 画面に描かれているものを一回全部消す
+        DxLib::ClearDrawScreen();
+        // ゲームの描画
+        result = gameApplication.Draw();
+        if (result != k_Success)
+        {
+            MyLOGE("draw error : %ld\n", result);
+            break;
+        }
+        // 裏画面の内容を表画面に反映させる
+        DxLib::ScreenFlip();
+    }
+
+    // ゲームの解放
+    result = gameApplication.Release();
+    if (result != k_Success)
+    {
+        MyLOGE("release error : %ld\n", result);
+    }
+
+    // ＤＸライブラリ使用の終了処理
+    DxLib::DxLib_End();
+
+    // ソフトの終了
+    return 0;
 }
