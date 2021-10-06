@@ -22,9 +22,16 @@ namespace Shooting2D
         std::shared_ptr<T> AddTurret(Types&&... _Args)
         {
             auto result = std::make_shared<T>(_Args...);
-            m_TurretArray.push_back(result);
+            AddTurret(result);
             return result;
         }
+
+        virtual MyVoid AddTurret(TurretPtr obj)
+        {
+            m_TurretArray.push_back(obj);
+        }
+
+        MyS32 Initialize() override;
 
         MyS32 Update(MyFloat px, MyFloat py) override;
 

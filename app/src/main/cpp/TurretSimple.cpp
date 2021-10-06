@@ -31,6 +31,12 @@ CTurretSimple::~CTurretSimple()
 {
 }
 
+MyS32 CTurretSimple::Initialize()
+{
+    m_Wait = 0;
+    return k_Success;
+}
+
 MyS32 CTurretSimple::Update(MyFloat px, MyFloat py)
 {
     // ウェイトの減少
@@ -38,7 +44,7 @@ MyS32 CTurretSimple::Update(MyFloat px, MyFloat py)
     // ウェイトがある場合待機
     if (m_Wait > 0)
     {
-        return k_Success;
+        return k_failure;
     }
     // 次の発射までのウェイトを設定
     m_Wait = m_Interval;

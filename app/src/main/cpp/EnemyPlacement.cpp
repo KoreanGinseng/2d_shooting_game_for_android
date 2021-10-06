@@ -10,6 +10,8 @@ using namespace Shooting2D;
 CEnemyPlacement::CEnemyPlacement()
     : m_Placement()
     , m_ImageArray()
+    , m_BulletImageArray()
+    , m_TurretPatternArray()
 {
 }
 
@@ -29,9 +31,24 @@ MyS32 CEnemyPlacement::AddImage(LPKMyS8 fileName)
     return k_Success;
 }
 
+MyS32 CEnemyPlacement::AddBulletImage(LPKMyS8 fileName)
+{
+    MyInt img = DxLib::LoadGraph(fileName);
+    if(img == -1)
+    {
+        return k_failure;
+    }
+    m_BulletImageArray.push_back(img);
+    return k_Success;
+}
+
 MyVoid CEnemyPlacement::AddAppear(MyFloat px, MyFloat py, MyFloat scroll, MyS32 type)
 {
     m_Placement.push_back({px, py, scroll, type});
+}
+
+MyVoid CEnemyPlacement::AddTurretPattern(Shooting2D::TurretCreatorPtr ptr){
+    m_TurretPatternArray.push_back(ptr);
 }
 
 MyVoid CEnemyPlacement::Release()
@@ -40,7 +57,12 @@ MyVoid CEnemyPlacement::Release()
     {
         DxLib::DeleteGraph(n);
     }
+    for (auto n : m_BulletImageArray)
+    {
+        DxLib::DeleteGraph(n);
+    }
     m_ImageArray.clear();
+    m_BulletImageArray.clear();
 }
 
 const MyInt CEnemyPlacement::GetImage(MyS32 n) const noexcept
@@ -48,9 +70,19 @@ const MyInt CEnemyPlacement::GetImage(MyS32 n) const noexcept
     return m_ImageArray[n];
 }
 
+const MyInt CEnemyPlacement::GetBulletImage(MyS32 n) const noexcept
+{
+    return m_BulletImageArray[n];
+}
+
 RKMy(CEnemyPlacement::Appear) CEnemyPlacement::GetAppear(MyS32 n) const noexcept
 {
     return m_Placement[n];
+}
+
+RKMy(TurretCreatorPtr) CEnemyPlacement::GetTurretPattern(MyS32 n) const noexcept
+{
+    return m_TurretPatternArray[n];
 }
 
 const size_t CEnemyPlacement::GetAppearCount() const noexcept

@@ -7,6 +7,8 @@
 
 #include "Common.h"
 #include <cmath>
+#include <algorithm>
+#include <DxLib.h>
 
 namespace Shooting2D
 {
@@ -26,6 +28,10 @@ namespace Shooting2D
 
     constexpr MyS32   k_BulletDrawOffsetX = 3;
     constexpr MyS32   k_BulletDrawOffsetY = 3;
+
+    /*! 敵パラ */
+    constexpr MyS32   k_EnemyBulletWait  = 100;
+    constexpr MyFloat k_EnemyBulletSpeed = 5.0f;
 
     /*! 背景定義 */
     constexpr MyFloat k_ScrollSpeed     = 5.0f; /*!< 背景スクロールスピード */

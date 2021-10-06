@@ -48,7 +48,7 @@ MyS32 CPlayer::Load()
     m_Radius = 20;
 
     // 弾発射用クラスの作成
-    m_TurretImage = DxLib::LoadGraph("image/Bullets/08Bullets.png");
+    m_TurretImage = DxLib::LoadGraph("image/Bullets/06Bullets.png");
     if (m_TurretImage == -1)
     {
         return -1;

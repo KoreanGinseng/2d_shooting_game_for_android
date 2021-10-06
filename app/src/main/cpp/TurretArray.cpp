@@ -15,13 +15,24 @@ CTurretArray::~CTurretArray()
 {
 }
 
-MyS32 CTurretArray::Update(MyFloat px, MyFloat py)
+MyS32 CTurretArray::Initialize()
 {
+    MyS32 result = k_failure;
     for (auto& turret : m_TurretArray)
     {
-        turret->Update(px, py);
+        result |= turret->Initialize();
     }
-    return k_Success;
+    return result;
+}
+
+MyS32 CTurretArray::Update(MyFloat px, MyFloat py)
+{
+    MyS32 result = k_failure;
+    for (auto& turret : m_TurretArray)
+    {
+        result |= turret->Update(px, py);
+    }
+    return result;
 }
 
 MyFloat CTurretArray::GetOffsetX() const noexcept

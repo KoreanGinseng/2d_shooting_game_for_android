@@ -11,13 +11,23 @@
 
 namespace Shooting2D
 {
-    class ITurret
+    class ITurret : public std::enable_shared_from_this<ITurret>
     {
     public:
 
         virtual ~ITurret() = default;
 
+        virtual MyS32 Initialize() = 0;
+
         virtual MyS32 Update(MyFloat px, MyFloat py) = 0;
+
+        template < typename T, typename... Types >
+        std::shared_ptr<T> Decorate(Types&&... _Args)
+        {
+            auto result = std::make_shared<T>(_Args...);
+            result->SetTurret(shared_from_this());
+            return result;
+        }
 
         virtual MyFloat GetOffsetX() const noexcept = 0;
 

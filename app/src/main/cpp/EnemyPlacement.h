@@ -8,6 +8,7 @@
 #include <vector>
 #include <memory>
 #include "Common.h"
+#include "TurretCreator.h"
 
 namespace Shooting2D
 {
@@ -26,6 +27,8 @@ namespace Shooting2D
 
         std::vector<MyInt>  m_ImageArray;
         std::vector<Appear> m_Placement;
+        std::vector<MyInt>  m_BulletImageArray;
+        std::vector<TurretCreatorPtr>  m_TurretPatternArray;
 
     public:
         CEnemyPlacement();
@@ -34,12 +37,18 @@ namespace Shooting2D
 
         MyS32 AddImage(LPKMyS8 fileName);
 
+        MyS32 AddBulletImage(LPKMyS8 fileName);
+
         MyVoid AddAppear(MyFloat px, MyFloat py, MyFloat scroll, MyS32 type);
+
+        MyVoid AddTurretPattern(TurretCreatorPtr ptr);
 
         MyVoid Release();
 
         const MyInt GetImage(MyS32 n) const noexcept;
+        const MyInt GetBulletImage(MyS32 n) const noexcept;
         RKMy(Appear) GetAppear(MyS32 n) const noexcept;
+        RKMy(TurretCreatorPtr) GetTurretPattern(MyS32 n) const noexcept;
         const size_t GetAppearCount() const noexcept;
     };
     using EnemyPlacementPtr = std::shared_ptr<CEnemyPlacement>;

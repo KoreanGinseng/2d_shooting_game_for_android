@@ -33,6 +33,8 @@ namespace Shooting2D
         /*! 敵管理 */
         CEnemyManager m_EnemyManager;
 
+        BulletList m_EnemyBullets;
+
     public:
 
         /******************************************************************************/

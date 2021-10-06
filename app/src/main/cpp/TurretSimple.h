@@ -33,6 +33,8 @@ namespace Shooting2D
 
         virtual ~CTurretSimple() override;
 
+        virtual MyS32 Initialize() override;
+
         virtual MyS32 Update(MyFloat px, MyFloat py) override;
 
         virtual MyFloat GetOffsetX() const noexcept override;

@@ -14,6 +14,7 @@ CEnemy::CEnemy()
     , m_Angle(0.0f)
     , m_Image(0)
     , m_HP(0)
+    , m_Turret()
 {
 }
 
@@ -21,7 +22,7 @@ CEnemy::~CEnemy()
 {
 }
 
-MyS32 CEnemy::Initialize(MyFloat px, MyFloat py, MyInt img)
+MyS32 CEnemy::Initialize(MyFloat px, MyFloat py, MyInt img, TurretCreatorPtr tcp)
 {
     m_bShow  = true;
     m_HP     = 3;
@@ -35,6 +36,9 @@ MyS32 CEnemy::Initialize(MyFloat px, MyFloat py, MyInt img)
     m_Width  = iw; m_Height = ih;
     m_Radius = 10;
     m_Image  = img;
+
+    // 砲台を登録
+    m_Turret = tcp->Create();
     return k_Success;
 }
 
@@ -52,6 +56,8 @@ MyS32 CEnemy::Update()
     {
         m_bShow = false;
     }
+    // 弾発射
+    m_Turret->Update(m_PosX, m_PosY);
     return k_Success;
 }
 
