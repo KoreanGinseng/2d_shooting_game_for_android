@@ -31,7 +31,10 @@ add_library( # Sets the name of the library.
              BackGround.cpp
              Bullet.cpp
              TurretSimple.cpp
-             TurretArray.cpp)
+             TurretArray.cpp
+             Enemy.cpp
+             EnemyPlacement.cpp
+             EnemyManager.cpp)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by

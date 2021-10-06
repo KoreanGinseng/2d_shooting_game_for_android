@@ -3,6 +3,7 @@
     @brief      ゲームシーンクラス実装ファイル
 *******************************************************************************/
 #include "GameScene.h"
+#include "Stage1EnemyPlacement.h"
 
 using namespace Shooting2D;
 
@@ -14,6 +15,7 @@ CGameScene::CGameScene()
         , m_Player()
         , m_BackGround()
         , m_PlayerBullets()
+        , m_EnemyManager()
 {
 }
 
@@ -37,6 +39,8 @@ MyS32 CGameScene::Load()
     // 弾リストの登録
     CSingletonBlackboard<BulletList>::GetInstance().
     Get<BulletList>()->Add("PlayerBullet", m_PlayerBullets);
+    // 敵配置生成
+    m_EnemyManager.Load(std::make_shared<CStage1EnemyPlacement>());
     return k_Success;
 }
 
@@ -52,6 +56,8 @@ MyS32 CGameScene::Initialize()
     m_BackGround.Initialize();
     // 弾リスト解放
     m_PlayerBullets.clear();
+    // 敵管理初期化
+    m_EnemyManager.Initialize();
 
     return k_Success;
 }
@@ -71,6 +77,8 @@ MyS32 CGameScene::Update()
     {
         blt->Update();
     }
+    // 敵更新
+    m_EnemyManager.Update(m_BackGround.GetScroll());
     // 終了した弾の消去
     m_PlayerBullets.erase(
             std::remove_if(
@@ -97,6 +105,8 @@ MyS32 CGameScene::Draw()
     {
         blt->Draw();
     }
+    // 敵描画
+    m_EnemyManager.Draw();
 
     return k_Success;
 }
@@ -116,6 +126,8 @@ MyS32 CGameScene::Release()
     // 弾リストの削除
     CSingletonBlackboard<BulletList >::GetInstance().
     Get<BulletList>()->Delete("PlayerBullet");
+    // 敵管理開放
+    m_EnemyManager.Release();
 
     return k_Success;
 }

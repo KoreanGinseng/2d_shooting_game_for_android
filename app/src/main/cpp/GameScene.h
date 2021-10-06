@@ -9,6 +9,7 @@
 #include "IScene.h"
 #include "Player.h"
 #include "BackGround.h"
+#include "EnemyManager.h"
 
 namespace Shooting2D
 {
@@ -28,6 +29,10 @@ namespace Shooting2D
 
         /*! プレイヤー弾リスト */
         BulletList m_PlayerBullets;
+
+        /*! 敵管理 */
+        CEnemyManager m_EnemyManager;
+
     public:
 
         /******************************************************************************/
