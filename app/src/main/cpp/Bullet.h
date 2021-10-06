@@ -16,6 +16,8 @@ namespace Shooting2D
         MyFloat m_SpeedX;
         MyFloat m_SpeedY;
 
+        MyFloat m_Angle;
+
         /*! 画像ID */
         MyInt   m_Image;
 

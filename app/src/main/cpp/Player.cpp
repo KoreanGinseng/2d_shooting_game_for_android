@@ -3,7 +3,7 @@
     @brief      プレイヤー実装ファイル
 *******************************************************************************/
 #include "Player.h"
-#include "TurretSimple.h"
+#include "TurretArray.h"
 #include <DxLib.h>
 
 using namespace Shooting2D;
@@ -51,12 +51,23 @@ MyS32 CPlayer::Load()
     {
         return -1;
     }
-    m_Turret = std::make_shared<CTurretSimple>
-            ("PlayerBullet",
-             m_Width * 0.5f - 43,
-             0.0f, 0.0f,
-             -k_PlayerBulletSpeed, k_PlayerBulletWait,
-             m_TurretImage);
+    auto turretArray = std::make_shared<CTurretArray>();
+    // 3発同時発射
+    // 弾の発射オフセット位置定義
+    const MyFloat offset[] = {-43 * 0.5f, -43, -43 * 1.5f};
+    const MyFloat speedX[] = {2, 0, -2};
+    for ( MyS32 cnt = 0; cnt < 3; cnt++)
+    {
+        auto turret_tmp = turretArray->AddTurret<CTurretSimple>
+                (
+                 "PlayerBullet",
+                 m_Width * 0.5f + offset[cnt],
+                 0.0f, speedX[cnt],
+                 -k_PlayerBulletSpeed, k_PlayerBulletWait,
+                 m_TurretImage
+                 );
+    }
+    m_Turret = turretArray;
     return k_Success;
 }
 

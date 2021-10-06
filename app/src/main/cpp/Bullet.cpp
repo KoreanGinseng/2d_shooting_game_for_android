@@ -11,6 +11,7 @@ CBullet::CBullet()
     : CGameObject()
     , m_SpeedX(0.0f)
     , m_SpeedY(0.0f)
+    , m_Angle(0.0f)
     , m_Image(0)
 {
 }
@@ -26,6 +27,7 @@ MyS32 CBullet::Initialize(MyFloat px, MyFloat py, MyFloat sx, MyFloat sy, MyS32 
     m_PosY   = py;
     m_SpeedX = sx;
     m_SpeedY = sy;
+    m_Angle  = atan2f(sy, sx) + ToRadian(90);
     m_Width  = iw;
     m_Height = ih;
     m_Image  = img;
@@ -41,7 +43,7 @@ MyS32 CBullet::Update()
     m_PosY += m_SpeedY;
     // 画面外で消去
     if (m_PosX < -m_Width || m_PosY < -m_Height ||
-    m_PosX > k_SceneWidth || m_PosY > k_SceneHeight)
+    m_PosX > k_SceneWidth + m_Width || m_PosY > k_SceneHeight + m_Height)
     {
         m_bShow = false;
     }
@@ -53,7 +55,7 @@ MyS32 CBullet::Draw()
     // 非表示のため描画なし
     if (!m_bShow) { return k_Success; }
 
-    DxLib::DrawGraph(k_SceneOffsetX + m_PosX, k_SceneOffsetY + m_PosY, m_Image, true);
+    DxLib::DrawRotaGraph(k_SceneOffsetX + m_PosX, k_SceneOffsetY + m_PosY, 1.0f, m_Angle, m_Image, true);
 
     return k_Success;
 }

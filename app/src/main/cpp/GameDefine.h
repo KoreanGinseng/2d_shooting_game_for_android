@@ -6,6 +6,7 @@
 #define GAMEDEFINE_H
 
 #include "Common.h"
+#include <cmath>
 
 namespace Shooting2D
 {
@@ -24,5 +25,9 @@ namespace Shooting2D
     constexpr MyFloat k_ScrollSpeed     = 5.0f; /*!< 背景スクロールスピード */
 
 }
+
+/*! ラジアン角との相互変換 */
+#define ToRadian(x) (x / 180.0f * DX_PI)
+#define ToDegree(x) (x / DX_PI * 180.0f)
 
 #endif //GAMEDEFINE_H
