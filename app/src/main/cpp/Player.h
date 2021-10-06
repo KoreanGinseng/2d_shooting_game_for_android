@@ -7,6 +7,7 @@
 #define PLAYER_H
 
 #include "GameObject.h"
+#include "Turret.h"
 
 namespace Shooting2D
 {
@@ -20,6 +21,10 @@ namespace Shooting2D
 
         /*! 利用する画像ID */
         MyInt m_Image;
+        MyInt m_TurretImage;
+
+        /*! 弾発射用クラス */
+        TurretPtr m_Turret;
 
     public:
 

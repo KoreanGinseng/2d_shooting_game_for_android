@@ -25,6 +25,9 @@ namespace Shooting2D
 
         /*! 背景 */
         CBackGround m_BackGround;
+
+        /*! プレイヤー弾リスト */
+        BulletList m_PlayerBullets;
     public:
 
         /******************************************************************************/

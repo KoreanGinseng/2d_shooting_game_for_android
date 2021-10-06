@@ -3,6 +3,7 @@
     @brief      プレイヤー実装ファイル
 *******************************************************************************/
 #include "Player.h"
+#include "TurretSimple.h"
 #include <DxLib.h>
 
 using namespace Shooting2D;
@@ -13,6 +14,8 @@ using namespace Shooting2D;
 CPlayer::CPlayer()
     : CGameObject()
     , m_Image(0)
+    ,m_TurretImage(0)
+    , m_Turret()
 {
 }
 
@@ -41,6 +44,19 @@ MyS32 CPlayer::Load()
     // 幅と高さを設定
     m_Width  = w;
     m_Height = h;
+
+    // 弾発射用クラスの作成
+    m_TurretImage = DxLib::LoadGraph("image/Bullets/08Bullets.png");
+    if (m_TurretImage == -1)
+    {
+        return -1;
+    }
+    m_Turret = std::make_shared<CTurretSimple>
+            ("PlayerBullet",
+             m_Width * 0.5f - 43,
+             0.0f, 0.0f,
+             -k_PlayerBulletSpeed, k_PlayerBulletWait,
+             m_TurretImage);
     return k_Success;
 }
 
@@ -66,6 +82,9 @@ MyS32 CPlayer::Update()
     // 非表示のため動作なし
     if (!m_bShow) { return k_Success; }
 
+    // 弾の発射
+    m_Turret->Update(m_PosX, m_PosY);
+
     // 移動
     MyS32 touchNum = DxLib::GetTouchInputNum();
     if (touchNum <= 0) { return k_Success; }
@@ -74,6 +93,7 @@ MyS32 CPlayer::Update()
     if (result == -1) { return k_Success; }
     m_PosX = posX - m_Width  * 0.5f;
     m_PosY = posY - m_Height * 0.5f;
+
     return k_Success;
 }
 
@@ -98,5 +118,7 @@ MyS32 CPlayer::Draw()
 MyS32 CPlayer::Release()
 {
     DxLib::DeleteGraph(m_Image);
+    DxLib::DeleteGraph(m_TurretImage);
+    m_Turret.reset();
     return k_Success;
 }

@@ -28,7 +28,9 @@ add_library( # Sets the name of the library.
              Animation.cpp
              AnimationList.cpp
              Animator.cpp
-             BackGround.cpp)
+             BackGround.cpp
+             Bullet.cpp
+             TurretSimple.cpp)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by

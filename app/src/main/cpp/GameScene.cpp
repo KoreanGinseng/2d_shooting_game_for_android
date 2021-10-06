@@ -13,6 +13,7 @@ CGameScene::CGameScene()
         : IScene()
         , m_Player()
         , m_BackGround()
+        , m_PlayerBullets()
 {
 }
 
@@ -33,7 +34,9 @@ MyS32 CGameScene::Load()
     if (m_Player.Load() != k_Success) { return k_failure; }
     // 背景の読み込み
     if (m_BackGround.Load() != k_Success) { return k_failure; }
-
+    // 弾リストの登録
+    CSingletonBlackboard<BulletList>::GetInstance().
+    Get<BulletList>()->Add("PlayerBullet", m_PlayerBullets);
     return k_Success;
 }
 
@@ -47,6 +50,8 @@ MyS32 CGameScene::Initialize()
     m_Player.Initialize();
     // 背景の初期化
     m_BackGround.Initialize();
+    // 弾リスト解放
+    m_PlayerBullets.clear();
 
     return k_Success;
 }
@@ -61,6 +66,18 @@ MyS32 CGameScene::Update()
     m_BackGround.Update();
     // プレイヤーの更新
     m_Player.Update();
+    // 弾更新
+    for (auto& blt : m_PlayerBullets)
+    {
+        blt->Update();
+    }
+    // 終了した弾の消去
+    m_PlayerBullets.erase(
+            std::remove_if(
+                    m_PlayerBullets.begin(), m_PlayerBullets.end(),
+                    [](RKMy(BulletPtr) blt) { return !blt->IsShow(); }),
+            m_PlayerBullets.end()
+            );
 
     return k_Success;
 }
@@ -75,6 +92,11 @@ MyS32 CGameScene::Draw()
     m_BackGround.Draw();
     // プレイヤーの描画
     m_Player.Draw();
+    // 弾描画
+    for (auto& blt : m_PlayerBullets)
+    {
+        blt->Draw();
+    }
 
     return k_Success;
 }
@@ -89,6 +111,11 @@ MyS32 CGameScene::Release()
     m_BackGround.Release();
     // プレイヤーの解放
     m_Player.Release();
+    // 弾リスト解放
+    m_PlayerBullets.clear();
+    // 弾リストの削除
+    CSingletonBlackboard<BulletList >::GetInstance().
+    Get<BulletList>()->Delete("PlayerBullet");
 
     return k_Success;
 }
