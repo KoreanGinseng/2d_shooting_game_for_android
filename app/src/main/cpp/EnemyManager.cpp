@@ -71,3 +71,8 @@ MyS32 CEnemyManager::Release()
     m_Placement.Release();
     return k_Success;
 }
+
+EnemyList& CEnemyManager::GetEnemyList()
+{
+    return m_EnemyList;
+}

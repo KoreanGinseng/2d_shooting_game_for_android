@@ -4,6 +4,10 @@
 *******************************************************************************/
 #include "GameScene.h"
 #include "Stage1EnemyPlacement.h"
+#include "CollisionFunction.h"
+#include "CollisionPlayerEnemy.h"
+#include "CollisionPlayerBullet.h"
+#include "CollisionEnemyBullet.h"
 
 using namespace Shooting2D;
 
@@ -79,6 +83,17 @@ MyS32 CGameScene::Update()
     }
     // 敵更新
     m_EnemyManager.Update(m_BackGround.GetScroll());
+    // 接触判定
+    for (auto& enemy : m_EnemyManager.GetEnemyList())
+    {
+        // プレイヤーと敵の判定
+        CCollisionFunction::Collision(m_Player, enemy);
+        // 敵と弾の判定
+        for (auto& bullet : m_PlayerBullets)
+        {
+            CCollisionFunction::Collision(enemy, bullet);
+        }
+    }
     // 終了した弾の消去
     m_PlayerBullets.erase(
             std::remove_if(

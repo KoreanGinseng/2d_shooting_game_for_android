@@ -18,8 +18,14 @@ namespace Shooting2D
     constexpr MyS32   k_ColorBitNum     =   16; /*!< 使用色ビット */
 
     /*! プレイヤー定義 */
-    constexpr MyS32   k_PlayerBulletWait = 10;
-    constexpr MyFloat k_PlayerBulletSpeed = 1.0f;
+    constexpr MyS32   k_PlayerBulletWait    = 10;
+    constexpr MyFloat k_PlayerBulletSpeed   = 1.0f;
+    constexpr MyS32   k_PlayerBulletOffsetY = 50;
+    constexpr MyS32   k_PlayerDrawOffsetX   =  5;
+    constexpr MyS32   k_PlayerDrawOffsetY   = 40;
+
+    constexpr MyS32   k_BulletDrawOffsetX = 3;
+    constexpr MyS32   k_BulletDrawOffsetY = 3;
 
     /*! 背景定義 */
     constexpr MyFloat k_ScrollSpeed     = 5.0f; /*!< 背景スクロールスピード */

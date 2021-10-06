@@ -15,6 +15,7 @@ CGameObject::CGameObject()
     , m_PosY(0.0f)
     , m_Width(0)
     , m_Height(0)
+    , m_Radius(0.0f)
 {
 }
 
@@ -77,6 +78,15 @@ MyS32 CGameObject::GetWidth() const noexcept
 MyS32 CGameObject::GetHeight() const noexcept
 {
     return m_Height;
+}
+
+/******************************************************************************/
+/*! 判定の半径の取得
+    @return         判定の半径
+*******************************************************************************/
+MyFloat CGameObject::GetRadius() const noexcept
+{
+    return m_Radius;
 }
 
 /******************************************************************************/

@@ -31,6 +31,7 @@ MyS32 CBullet::Initialize(MyFloat px, MyFloat py, MyFloat sx, MyFloat sy, MyS32 
     m_Width  = iw;
     m_Height = ih;
     m_Image  = img;
+    m_Radius = 4;
     return k_Success;
 }
 
@@ -55,7 +56,9 @@ MyS32 CBullet::Draw()
     // 非表示のため描画なし
     if (!m_bShow) { return k_Success; }
 
-    DxLib::DrawRotaGraph(k_SceneOffsetX + m_PosX, k_SceneOffsetY + m_PosY, 1.0f, m_Angle, m_Image, true);
-
+    MyInt drawPosX = k_SceneOffsetX + m_PosX + k_BulletDrawOffsetX;
+    MyInt drawPosY = k_SceneOffsetY + m_PosY + k_BulletDrawOffsetY;
+    DxLib::DrawRotaGraph(drawPosX,  drawPosY, 1.0f, m_Angle, m_Image, true);
+    DxLib::DrawCircle(m_PosX, m_PosY, m_Radius, DxLib::GetColor(0, 0, 0));
     return k_Success;
 }
