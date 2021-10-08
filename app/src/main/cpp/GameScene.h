@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "BackGround.h"
 #include "EnemyManager.h"
+#include "GameSEController.h"
 
 namespace Shooting2D
 {
@@ -33,7 +34,14 @@ namespace Shooting2D
         /*! 敵管理 */
         CEnemyManager m_EnemyManager;
 
+        /*! 敵弾リスト */
         BulletList m_EnemyBullets;
+
+        /*! BGM */
+        MyInt m_BgmHandle;
+
+        /*! SE */
+        SEControllerPtr<SEType> m_SEController;
 
     public:
 

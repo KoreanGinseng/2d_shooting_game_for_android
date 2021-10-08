@@ -96,7 +96,10 @@ MyS32 CPlayer::Update()
     if (!m_bShow) { return k_Success; }
 
     // 弾の発射
-    m_Turret->Update(m_PosX - k_PlayerDrawOffsetX, m_PosY - k_PlayerBulletOffsetY);
+    if(m_Turret->Update(m_PosX - k_PlayerDrawOffsetX, m_PosY - k_PlayerBulletOffsetY) == k_Success)
+    {
+        SEService::GetService()->Play(SEType::Shot);
+    }
 
     // 移動
     MyS32 touchNum = DxLib::GetTouchInputNum();

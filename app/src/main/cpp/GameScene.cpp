@@ -21,6 +21,8 @@ CGameScene::CGameScene()
         , m_PlayerBullets()
         , m_EnemyManager()
         , m_EnemyBullets()
+        , m_BgmHandle(-1)
+        , m_SEController()
 {
 }
 
@@ -50,6 +52,20 @@ MyS32 CGameScene::Load()
     Get<BulletList>()->Add("EnemyBullet", m_EnemyBullets);
     // 敵配置生成
     m_EnemyManager.Load(std::make_shared<CStage1EnemyPlacement>());
+
+    // BGM読み込み
+    m_BgmHandle = DxLib::LoadBGM("sounds/bgm/maoudamashii_fantasy_13_loop.ogg");
+    if (m_BgmHandle == -1)
+    {
+        return k_failure;
+    }
+
+    // SE読み込み
+    m_SEController = std::make_shared<CGameSEController>();
+    m_SEController->Load(SEType::Shot     , "sounds/se/maoudamashii_fight_15.ogg");
+    //m_SEController->Load(SEType::Explosion, "");
+    SEService::SetService(m_SEController);
+
     return k_Success;
 }
 
@@ -68,6 +84,9 @@ MyS32 CGameScene::Initialize()
     m_EnemyBullets.clear();
     // 敵管理初期化
     m_EnemyManager.Initialize();
+
+    // BGM再生
+    DxLib::PlaySoundMem(m_BgmHandle, DX_PLAYTYPE_LOOP);
 
     return k_Success;
 }
@@ -159,6 +178,12 @@ MyS32 CGameScene::Draw()
 *******************************************************************************/
 MyS32 CGameScene::Release()
 {
+    // SE解放
+    m_SEController.reset();
+    SEService::SetService(nullptr);
+    // BGM解放
+    DxLib::StopSoundMem(m_BgmHandle);
+    DxLib::DeleteSoundMem(m_BgmHandle);
     // 背景の解放
     m_BackGround.Release();
     // プレイヤーの解放

@@ -9,6 +9,8 @@
 #include <cmath>
 #include <algorithm>
 #include <DxLib.h>
+#include "ServiceLocator.h"
+#include "SEController.h"
 
 namespace Shooting2D
 {
@@ -18,6 +20,18 @@ namespace Shooting2D
     constexpr MyS32   k_SceneWidth      =  540; /*!< 画面の横幅 */
     constexpr MyS32   k_SceneHeight     =  960; /*!< 画面の立幅 */
     constexpr MyS32   k_ColorBitNum     =   16; /*!< 使用色ビット */
+
+    /*! SE列挙 */
+    enum class SEType
+    {
+        Shot,
+        Explosion,
+
+        Count,
+    };
+    /*! SE最大数MyS32アクセス用 */
+    constexpr MyS32   k_SECount = ((MyS32)SEType::Count);
+    using SEService = CServiceLocator<ISEController<SEType>>;
 
     /*! プレイヤー定義 */
     constexpr MyS32   k_PlayerBulletWait    = 10;
