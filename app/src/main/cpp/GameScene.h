@@ -11,6 +11,7 @@
 #include "BackGround.h"
 #include "EnemyManager.h"
 #include "GameSEController.h"
+#include "EffectEmitter.h"
 
 namespace Shooting2D
 {
@@ -36,6 +37,12 @@ namespace Shooting2D
 
         /*! 敵弾リスト */
         BulletList m_EnemyBullets;
+
+        /*! エフェクトリスト */
+        EffectList m_EffectList;
+
+        /*! エミッター */
+        EffectEmitterArray m_EmitterArray;
 
         /*! BGM */
         MyInt m_BgmHandle;

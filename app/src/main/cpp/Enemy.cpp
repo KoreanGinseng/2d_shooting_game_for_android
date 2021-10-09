@@ -4,6 +4,7 @@
 
 #include "Enemy.h"
 #include <DxLib.h>
+#include "EffectEmitter.h"
 
 using namespace Shooting2D;
 
@@ -77,6 +78,9 @@ MyVoid CEnemy::Damage(MyS32 dmg)
     if (m_HP <= 0)
     {
         m_bShow = false;
+        // エフェクト発生
+        CSingletonBlackboard<EffectEmitterPtr>::GetInstance()
+                .Get<EffectEmitterPtr>("Explosion")->Emit(m_PosX, m_PosY);
     }
 }
 

@@ -4,6 +4,8 @@
 *******************************************************************************/
 #include "GameScene.h"
 #include "Stage1EnemyPlacement.h"
+#include "HitEffectEmitter.h"
+#include "ExplosionEffectEmitter.h"
 #include "CollisionFunction.h"
 #include "CollisionPlayerEnemy.h"
 #include "CollisionPlayerBullet.h"
@@ -21,6 +23,8 @@ CGameScene::CGameScene()
         , m_PlayerBullets()
         , m_EnemyManager()
         , m_EnemyBullets()
+        , m_EffectList()
+        , m_EmitterArray()
         , m_BgmHandle(-1)
         , m_SEController()
 {
@@ -53,17 +57,33 @@ MyS32 CGameScene::Load()
     // 敵配置生成
     m_EnemyManager.Load(std::make_shared<CStage1EnemyPlacement>());
 
+    // エフェクトリストの登録
+    CSingletonBlackboard<EffectList>::GetInstance().Get<EffectList>()->Add("Effect", m_EffectList);
+
+    // エフェクトエミッターの生成
+    MyInt hitEffectImage = DxLib::LoadGraph("image/Effects/pipo-btleffect002.png");
+    MyInt explosionEffectImage = DxLib::LoadGraph("image/Effects/pipo-btleffect003.png");
+    if (hitEffectImage == -1 || explosionEffectImage == -1) { return k_failure; }
+    m_EmitterArray.push_back(CHitEffectEmitter::CreateEmitter(hitEffectImage));
+    m_EmitterArray.push_back(CExplosionEffectEmitter::CreateEmitter(explosionEffectImage));
+
+    // エフェクトエミッターの登録
+    for (size_t i = 0; i < m_EmitterArray.size(); i++)
+    {
+        CSingletonBlackboard<EffectEmitterPtr>::GetInstance()
+        .Get<EffectEmitterPtr>()->Add(k_EmitterBoardName[i], m_EmitterArray[i]);
+    }
+    DxLib::DeleteGraph(hitEffectImage);
+    DxLib::DeleteGraph(explosionEffectImage);
+
     // BGM読み込み
     m_BgmHandle = DxLib::LoadBGM("sounds/bgm/maoudamashii_fantasy_13_loop.ogg");
-    if (m_BgmHandle == -1)
-    {
-        return k_failure;
-    }
+    if (m_BgmHandle == -1) { return k_failure; }
 
     // SE読み込み
     m_SEController = std::make_shared<CGameSEController>();
     m_SEController->Load(SEType::Shot     , "sounds/se/maoudamashii_fight_15.ogg");
-    //m_SEController->Load(SEType::Explosion, "");
+    m_SEController->Load(SEType::Explosion, "sounds/se/maoudamashii_explosion_06.ogg");
     SEService::SetService(m_SEController);
 
     return k_Success;
@@ -82,6 +102,8 @@ MyS32 CGameScene::Initialize()
     // 弾リスト解放
     m_PlayerBullets.clear();
     m_EnemyBullets.clear();
+    // エフェクトリスト解放
+    m_EffectList.clear();
     // 敵管理初期化
     m_EnemyManager.Initialize();
 
@@ -113,6 +135,11 @@ MyS32 CGameScene::Update()
     {
         blt->Update();
     }
+    // エフェクト更新
+    for (auto& efc : m_EffectList)
+    {
+        efc->Update();
+    }
     // 接触判定
     for (auto& enemy : m_EnemyManager.GetEnemyList())
     {
@@ -142,7 +169,13 @@ MyS32 CGameScene::Update()
                     [](RKMy(BulletPtr) blt) { return !blt->IsShow(); }),
             m_EnemyBullets.end()
             );
-
+    // 終了したエフェクトの消去
+    m_EffectList.erase(
+            std::remove_if(
+                    m_EffectList.begin(), m_EffectList.end(),
+                    [](RKMy(EffectPtr) efc) { return !efc->IsShow(); }),
+            m_EffectList.end()
+            );
     return k_Success;
 }
 
@@ -167,6 +200,11 @@ MyS32 CGameScene::Draw()
     for (auto& blt : m_EnemyBullets)
     {
         blt->Draw();
+    }
+    // エフェクト描画
+    for (auto& efc : m_EffectList)
+    {
+        efc->Draw();
     }
 
     return k_Success;
@@ -199,6 +237,17 @@ MyS32 CGameScene::Release()
     Get<BulletList>()->Delete("EnemyBullet");
     // 敵管理開放
     m_EnemyManager.Release();
+    // エフェクトリスト解放
+    m_EffectList.clear();
+    // エフェクトリストの削除
+    CSingletonBlackboard<EffectList>::GetInstance().Get<EffectList>()->Delete("Effect");
+    // エフェクトエミッターの削除
+    for (size_t i = 0; i < m_EmitterArray.size(); i++)
+    {
+        CSingletonBlackboard<EffectEmitterPtr>::GetInstance()
+        .Get<EffectEmitterPtr>()->Delete(k_EmitterBoardName[i]);
+    }
+    m_EmitterArray.clear();
 
     return k_Success;
 }

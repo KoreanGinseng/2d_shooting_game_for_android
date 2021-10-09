@@ -45,7 +45,7 @@ MyS32 CPlayer::Load()
     m_Width  = w;
     m_Height = h;
     // 判定半径設定
-    m_Radius = 20;
+    m_Radius = 10;
 
     // 弾発射用クラスの作成
     m_TurretImage = DxLib::LoadGraph("image/Bullets/06Bullets.png");

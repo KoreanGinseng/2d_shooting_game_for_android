@@ -38,6 +38,8 @@ namespace Shooting2D
         MyS32 Update();
 
         MyInt GetCurrentImage() const noexcept;
+
+        MyBool IsAnimationEnd() const noexcept;
     };
 
     using AnimatorPtr = std::shared_ptr<CAnimator>;

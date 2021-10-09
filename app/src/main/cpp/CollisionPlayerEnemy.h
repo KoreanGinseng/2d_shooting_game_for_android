@@ -8,6 +8,7 @@
 #include "CollisionFunction.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "EffectEmitter.h"
 
 namespace Shooting2D
 {
@@ -24,6 +25,9 @@ namespace Shooting2D
         }
         // プレイヤーを非表示にする
         player.SetShow(false);
+        // エフェクト発生
+        CSingletonBlackboard<EffectEmitterPtr>::GetInstance()
+                .Get<EffectEmitterPtr>("Explosion")->Emit(player.GetPosX(), player.GetPosY());
     }
 
     template < >

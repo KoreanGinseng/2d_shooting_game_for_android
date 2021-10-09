@@ -55,9 +55,16 @@ MyS32 CAnimator::Update()
             m_CurrentFrame++;
         }
     }
+    return k_Success;
 }
 
 MyInt CAnimator::GetCurrentImage() const noexcept
 {
     return m_CurrentImage;
+}
+
+
+MyBool CAnimator::IsAnimationEnd() const noexcept
+{
+    return m_CurrentFrame >= m_CurrentAnimation->GetFrameCount();
 }

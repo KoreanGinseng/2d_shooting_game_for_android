@@ -25,7 +25,7 @@ namespace Shooting2D
         {
         }
 
-        MyS32 Update(MyFloat px, MyFloat py)
+        MyS32 Update(MyFloat px, MyFloat py) override
         {
             MyS32 result = k_failure;
             for (MyS32 i = 0; i < m_Count; i++)

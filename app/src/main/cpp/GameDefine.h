@@ -33,6 +33,13 @@ namespace Shooting2D
     constexpr MyS32   k_SECount = ((MyS32)SEType::Count);
     using SEService = CServiceLocator<ISEController<SEType>>;
 
+    /*! エミッターの登録名 */
+    constexpr LPMyS8 k_EmitterBoardName[] =
+    {
+            "Hit",
+            "Explosion",
+    };
+
     /*! プレイヤー定義 */
     constexpr MyS32   k_PlayerBulletWait    = 10;
     constexpr MyFloat k_PlayerBulletSpeed   = 1.0f;
@@ -48,7 +55,7 @@ namespace Shooting2D
     constexpr MyFloat k_EnemyBulletSpeed = 5.0f;
 
     /*! 背景定義 */
-    constexpr MyFloat k_ScrollSpeed     = 5.0f; /*!< 背景スクロールスピード */
+    constexpr MyFloat k_ScrollSpeed     = 1.0f; /*!< 背景スクロールスピード */
 
 }
 

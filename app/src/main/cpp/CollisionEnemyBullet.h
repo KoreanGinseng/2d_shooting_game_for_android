@@ -8,6 +8,7 @@
 #include "CollisionFunction.h"
 #include "Enemy.h"
 #include "Bullet.h"
+#include "EffectEmitter.h"
 
 namespace Shooting2D
 {
@@ -26,6 +27,9 @@ namespace Shooting2D
         enemy.Damage(1);
         // 弾は接触で非表示
         bullet.SetShow(false);
+        // エフェクト発生
+        CSingletonBlackboard<EffectEmitterPtr>::GetInstance()
+                .Get<EffectEmitterPtr>("Hit")->Emit(bullet.GetPosX(), bullet.GetPosY());
     }
 
     template < >
