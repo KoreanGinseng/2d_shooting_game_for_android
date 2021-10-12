@@ -37,14 +37,14 @@ namespace Shooting2D
         virtual MyS32 Load(RKMy(SEType) id, LPKMyS8 fileName) override
         {
             m_Sounds[(MyS32)id] = DxLib::LoadSoundMem(fileName);
-            return (m_Sounds[(MyS32)id] != -1) ? k_Success : k_failure;
+            return ((m_Sounds[(MyS32)id] != -1) ? k_Success : k_failure);
         }
 
         virtual MyS32 Play(RKMy(SEType) id) override
         {
             MyInt handle = m_Sounds[(MyS32)id];
             DxLib::SetVolumeSoundMem(handle, (MyS32)(m_Volume * 10000));
-            return (DxLib::PlaySoundMem(handle, DX_PLAYTYPE_BACK) != -1) ? k_Success : k_failure;
+            return ((DxLib::PlaySoundMem(handle, DX_PLAYTYPE_BACK) != -1) ? k_Success : k_failure);
         }
 
         virtual MyVoid SetVolume(MyFloat vol) override

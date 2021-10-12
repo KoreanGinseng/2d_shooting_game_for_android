@@ -44,7 +44,7 @@ namespace Shooting2D
                 MyS32 diff = m_Score->Get() - m_CurrentScore;
                 if (diff / 10 != 0)
                 {
-                    diff /= 0;
+                    diff /= 10;
                 }
                 m_CurrentScore += diff;
             }

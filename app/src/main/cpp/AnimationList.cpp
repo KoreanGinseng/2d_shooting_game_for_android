@@ -34,6 +34,7 @@ AnimatorPtr CAnimationList::CreateAnimator()
 MyS32 CAnimationList::Release()
 {
     m_AnimationArray.clear();
+    return k_Success;
 }
 
 AnimationPtr CAnimationList::GetAnimation(MyS32 n) const noexcept
