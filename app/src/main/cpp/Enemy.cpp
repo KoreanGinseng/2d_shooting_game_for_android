@@ -5,6 +5,7 @@
 #include "Enemy.h"
 #include <DxLib.h>
 #include "EffectEmitter.h"
+#include "Score.h"
 
 using namespace Shooting2D;
 
@@ -81,6 +82,8 @@ MyVoid CEnemy::Damage(MyS32 dmg)
         // エフェクト発生
         CSingletonBlackboard<EffectEmitterPtr>::GetInstance()
                 .Get<EffectEmitterPtr>("Explosion")->Emit(m_PosX, m_PosY);
+        // スコア加算
+        CSingletonBlackboard<ScorePtr>::GetInstance().Get<ScorePtr>("Score")->Add(100);
     }
 }
 

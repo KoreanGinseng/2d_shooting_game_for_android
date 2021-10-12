@@ -12,6 +12,7 @@
 #include "EnemyManager.h"
 #include "GameSEController.h"
 #include "EffectEmitter.h"
+#include "ScoreUI.h"
 
 namespace Shooting2D
 {
@@ -49,6 +50,12 @@ namespace Shooting2D
 
         /*! SE */
         SEControllerPtr<SEType> m_SEController;
+
+        /*! スコア */
+        ScorePtr m_Score;
+
+        /*! スコアUI */
+        CScoreUI m_ScoreUI;
 
     public:
 

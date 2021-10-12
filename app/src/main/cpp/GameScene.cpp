@@ -27,6 +27,8 @@ CGameScene::CGameScene()
         , m_EmitterArray()
         , m_BgmHandle(-1)
         , m_SEController()
+        , m_Score(std::make_shared<CScore>())
+        , m_ScoreUI(m_Score)
 {
 }
 
@@ -76,6 +78,9 @@ MyS32 CGameScene::Load()
     DxLib::DeleteGraph(hitEffectImage);
     DxLib::DeleteGraph(explosionEffectImage);
 
+    // スコア登録
+    CSingletonBlackboard<ScorePtr>::GetInstance().Get<ScorePtr>()->Add("Score", m_Score);
+
     // BGM読み込み
     m_BgmHandle = DxLib::LoadBGM("sounds/bgm/maoudamashii_fantasy_13_loop.ogg");
     if (m_BgmHandle == -1) { return k_failure; }
@@ -106,6 +111,10 @@ MyS32 CGameScene::Initialize()
     m_EffectList.clear();
     // 敵管理初期化
     m_EnemyManager.Initialize();
+
+    // スコア初期化
+    m_Score->Reset();
+    m_ScoreUI.Reset();
 
     // BGM再生
     DxLib::PlaySoundMem(m_BgmHandle, DX_PLAYTYPE_LOOP);
@@ -206,6 +215,8 @@ MyS32 CGameScene::Draw()
     {
         efc->Draw();
     }
+    // スコア描画
+    m_ScoreUI.Draw();
 
     return k_Success;
 }
@@ -248,6 +259,9 @@ MyS32 CGameScene::Release()
         .Get<EffectEmitterPtr>()->Delete(k_EmitterBoardName[i]);
     }
     m_EmitterArray.clear();
+
+    // スコア削除
+    CSingletonBlackboard<ScorePtr>::GetInstance().Get<ScorePtr>()->Delete("Score");
 
     return k_Success;
 }
