@@ -32,6 +32,7 @@ namespace Shooting2D
 
         EnemyList& GetEnemyList();
 
+        MyBool IsHideAllEnemy();
     };
 }
 

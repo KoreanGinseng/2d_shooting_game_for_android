@@ -12,8 +12,14 @@ using namespace Shooting2D;
 *******************************************************************************/
 MyS32 CGameApplication::Initialize()
 {
-    if (m_Scene.Load() != k_Success) { return k_failure; }
-    if (m_Scene.Initialize() != k_Success) { return k_failure; }
+    m_SceneManager = std::make_shared<CSceneManager>();
+    m_SceneManager->Regist<CTitleScene>("Title");
+    m_SceneManager->Regist<CGameScene>("Game");
+    m_SceneManager->Regist<CClearScene>("Clear");
+    m_SceneManager->Regist<COverScene>("Over");
+    m_SceneManager->Change("Title");
+    SceneChangerService::SetService(m_SceneManager);
+
     return k_Success;
 }
 
@@ -23,8 +29,7 @@ MyS32 CGameApplication::Initialize()
 *******************************************************************************/
 MyS32 CGameApplication::Update()
 {
-    m_Scene.Update();
-    return k_Success;
+    return m_SceneManager->Update();
 }
 
 /******************************************************************************/
@@ -33,8 +38,7 @@ MyS32 CGameApplication::Update()
 *******************************************************************************/
 MyS32 CGameApplication::Draw()
 {
-    m_Scene.Draw();
-    return k_Success;
+    return m_SceneManager->Draw();
 }
 
 /******************************************************************************/
@@ -43,7 +47,6 @@ MyS32 CGameApplication::Draw()
 *******************************************************************************/
 MyS32 CGameApplication::Release()
 {
-    m_Scene.Release();
-    return k_Success;
+    return m_SceneManager->Release();
 }
 

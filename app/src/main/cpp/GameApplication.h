@@ -8,6 +8,10 @@
 
 #include "Common.h"
 #include "GameScene.h"
+#include "SceneManager.h"
+#include "TitleScene.h"
+#include "ClearScene.h"
+#include "OverScene.h"
 
 namespace Shooting2D
 {
@@ -20,7 +24,7 @@ namespace Shooting2D
     private:
 
         /*! シーン */
-        CGameScene m_Scene;
+        std::shared_ptr<CSceneManager> m_SceneManager { nullptr };
 
     public:
 

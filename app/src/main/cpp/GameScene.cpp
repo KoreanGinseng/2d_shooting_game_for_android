@@ -10,6 +10,8 @@
 #include "CollisionPlayerEnemy.h"
 #include "CollisionPlayerBullet.h"
 #include "CollisionEnemyBullet.h"
+#include "MissionPlayerDead.h"
+#include "MissionHideAllEnemy.h"
 
 using namespace Shooting2D;
 
@@ -29,6 +31,8 @@ CGameScene::CGameScene()
         , m_SEController()
         , m_Score(std::make_shared<CScore>())
         , m_ScoreUI(m_Score)
+        , m_Mission(std::make_shared<CMission<CMissionHideAllEnemy, CMissionPlayerDead>>())
+        , m_MissionUI(m_Mission)
 {
 }
 
@@ -58,6 +62,8 @@ MyS32 CGameScene::Load()
     Get<BulletList>()->Add("EnemyBullet", m_EnemyBullets);
     // 敵配置生成
     m_EnemyManager.Load(std::make_shared<CStage1EnemyPlacement>());
+    // 敵管理の登録
+    CSingletonBlackboard<CEnemyManager>::GetInstance().Get<CEnemyManager>()->Add("EnemyManager", m_EnemyManager);
 
     // エフェクトリストの登録
     CSingletonBlackboard<EffectList>::GetInstance().Get<EffectList>()->Add("Effect", m_EffectList);
@@ -185,6 +191,16 @@ MyS32 CGameScene::Update()
                     [](RKMy(EffectPtr) efc) { return !efc->IsShow(); }),
             m_EffectList.end()
             );
+
+    // ミッション判定
+    if (m_Mission->IsFailed())
+    {
+        SceneChangerService::GetService()->Change("Over", std::make_shared<CSceneChangeEffectFade>(30));
+    }
+    else if (m_Mission->IsSuccessed())
+    {
+        SceneChangerService::GetService()->Change("Clear", std::make_shared<CSceneChangeEffectFade>(30));
+    }
     return k_Success;
 }
 
@@ -218,6 +234,9 @@ MyS32 CGameScene::Draw()
     // スコア描画
     m_ScoreUI.Draw();
 
+    // ミッション描画
+    m_MissionUI.Draw();
+
     return k_Success;
 }
 
@@ -248,6 +267,7 @@ MyS32 CGameScene::Release()
     Get<BulletList>()->Delete("EnemyBullet");
     // 敵管理開放
     m_EnemyManager.Release();
+    CSingletonBlackboard<CEnemyManager>::GetInstance().Get<CEnemyManager>()->Delete("EnemyManager");
     // エフェクトリスト解放
     m_EffectList.clear();
     // エフェクトリストの削除

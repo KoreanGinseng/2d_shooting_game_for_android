@@ -76,3 +76,8 @@ EnemyList& CEnemyManager::GetEnemyList()
 {
     return m_EnemyList;
 }
+
+MyBool CEnemyManager::IsHideAllEnemy()
+{
+    return m_CurrentAppear >= m_Placement.GetAppearCount() && m_EnemyList.size() <= 0;
+}

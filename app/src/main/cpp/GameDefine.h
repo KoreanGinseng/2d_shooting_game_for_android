@@ -11,6 +11,8 @@
 #include <DxLib.h>
 #include "ServiceLocator.h"
 #include "SEController.h"
+#include "SceneChanger.h"
+#include "SceneChangeFade.h"
 
 namespace Shooting2D
 {
@@ -20,6 +22,12 @@ namespace Shooting2D
     constexpr MyS32   k_SceneWidth      =  540; /*!< 画面の横幅 */
     constexpr MyS32   k_SceneHeight     =  960; /*!< 画面の立幅 */
     constexpr MyS32   k_ColorBitNum     =   16; /*!< 使用色ビット */
+
+    /*! タイトル画面 */
+    constexpr MyS32   k_StartButtonW = 150;
+    constexpr MyS32   k_StartButtonH =  30;
+    constexpr MyS32   k_StartButtonX = k_SceneOffsetX + (k_SceneWidth - k_StartButtonW) * 0.5f;
+    constexpr MyS32   k_StartButtonY = k_SceneOffsetY + k_SceneHeight * 0.5f;
 
     /*! SE列挙 */
     enum class SEType
@@ -32,6 +40,9 @@ namespace Shooting2D
     /*! SE最大数MyS32アクセス用 */
     constexpr MyS32   k_SECount = ((MyS32)SEType::Count);
     using SEService = CServiceLocator<ISEController<SEType>>;
+
+    /*! 画面遷移用 */
+    using SceneChangerService = CServiceLocator<ISceneChanger>;
 
     /*! エミッターの登録名 */
     constexpr LPMyS8 k_EmitterBoardName[] =

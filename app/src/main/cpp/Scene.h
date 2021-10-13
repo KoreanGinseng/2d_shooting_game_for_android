@@ -2,12 +2,13 @@
 /*! @file       IScene.h
     @brief      シーンインターフェース定義ファイル
 *******************************************************************************/
-#ifndef ISCENE_H
-#define ISCENE_H
+#ifndef SCENE_H
+#define SCENE_H
 
 #include "Common.h"
 #include <cassert>
 #include <memory>
+#include <string>
 
 namespace Shooting2D
 {
@@ -51,9 +52,10 @@ namespace Shooting2D
     };
 
     /*! ポインタ名の置き換え */
-    using LPScene = std::shared_ptr<IScene>;
+    using ScenePtr = std::shared_ptr<IScene>;
+    using SceneKey = std::string;
 
 }
 
 
-#endif //ISCENE_H
+#endif //SCENE_H

@@ -35,7 +35,10 @@ add_library( # Sets the name of the library.
              Enemy.cpp
              EnemyPlacement.cpp
              EnemyManager.cpp
-             Effect.cpp)
+             Effect.cpp
+             TitleScene.cpp
+             OverScene.cpp
+             ClearScene.cpp)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by

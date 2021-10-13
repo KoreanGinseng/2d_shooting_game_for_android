@@ -6,13 +6,14 @@
 #ifndef GAMESCENE_H
 #define GAMESCENE_H
 
-#include "IScene.h"
+#include "Scene.h"
 #include "Player.h"
 #include "BackGround.h"
 #include "EnemyManager.h"
 #include "GameSEController.h"
 #include "EffectEmitter.h"
 #include "ScoreUI.h"
+#include "MissionUI.h"
 
 namespace Shooting2D
 {
@@ -56,6 +57,12 @@ namespace Shooting2D
 
         /*! スコアUI */
         CScoreUI m_ScoreUI;
+
+        /*! ミッション */
+        MissionPtr m_Mission;
+
+        /*! ミッションUI */
+        CMissionUI m_MissionUI;
 
     public:
 

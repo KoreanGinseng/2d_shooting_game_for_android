@@ -2,7 +2,7 @@
 /*! @file       native-lib.cpp
     @brief      エントリポイント
 *******************************************************************************/
-#include "DxLib.h"
+#include <DxLib.h>
 #include "GameApplication.h"
 #include "GameDefine.h"
 
