@@ -8,10 +8,15 @@
 using namespace Shooting2D;
 
 CTitleScene::CTitleScene()
-    : m_bPressReturn(false)
-    , m_bSceneChange(false)
+    : m_bSceneChange(false)
+    , m_BgmHandle(-1)
     , m_Image(-1)
-    , m_FontHandle(-1)
+    , m_LogoImage(-1)
+    , m_BtnTitle(std::make_shared<CButton>(
+            k_StartButtonX, k_StartButtonY,
+            k_StartButtonX + k_StartButtonW, k_StartButtonY + k_StartButtonH
+            ))
+    , m_BtnUI(m_BtnTitle)
 {
 }
 
@@ -23,15 +28,23 @@ MyS32 CTitleScene::Load()
 {
     // UI生成
     m_Image = DxLib::LoadGraph("image/BackGround/04Background.png");
-    m_FontHandle = DxLib::LoadFontDataToHandle("fonts/MS_Mincho.dft", 0);
-    if (m_FontHandle == -1) { return k_failure; }
+    m_LogoImage = DxLib::LoadGraph("image/BackGround/Title.png");
+    MyInt btnImg = DxLib::LoadGraph("image/Button/Start.png");
+    m_BtnUI.Load(
+            DxLib::DerivationGraph( 0, 0, 30, 15, btnImg),
+            DxLib::DerivationGraph(32, 0, 30, 15, btnImg),
+            -1, -1
+            );
+    DxLib::DeleteGraph(btnImg);
+
+    m_BgmHandle = DxLib::LoadBGM("sounds/bgm/maoudamashii_healing_13_loop.ogg");
     return k_Success;
 }
 
 MyS32 CTitleScene::Initialize()
 {
-    m_bPressReturn = false;
     m_bSceneChange = false;
+    DxLib::PlaySoundMem(m_BgmHandle, DX_PLAYTYPE_LOOP);
     return k_Success;
 }
 
@@ -41,25 +54,9 @@ MyS32 CTitleScene::Update()
     {
        return k_Success;
     }
-    MyS32 touchNum = DxLib::GetTouchInputNum();
-    if (touchNum > 0)
+    if (m_BtnTitle->IsPull())
     {
-        if (!m_bPressReturn)
-        {
-            MyInt posX = 0, posY = 0;
-            DxLib::GetTouchInput(touchNum - 1, &posX, &posY, nullptr, nullptr);
-            if (posX > k_StartButtonX && posX < k_StartButtonX + k_StartButtonW &&
-                posY > k_StartButtonY && posY < k_StartButtonY + k_StartButtonH)
-            {
-                m_bPressReturn = true;
-            }
-        }
-    }
-    else if (m_bPressReturn)
-    {
-        m_bPressReturn = false;
-        m_bSceneChange = true;
-        SceneChangerService::GetService()->Change("Game", std::make_shared<CSceneChangeEffectFade>(30));
+        m_bSceneChange = SceneChangerService::GetService()->Change("Game", std::make_shared<CSceneChangeEffectFade>(30));
     }
     return k_Success;
 }
@@ -67,19 +64,18 @@ MyS32 CTitleScene::Update()
 MyS32 CTitleScene::Draw()
 {
     DxLib::DrawExtendGraph(k_SceneOffsetX, k_SceneOffsetY, k_SceneOffsetX + k_SceneWidth, k_SceneOffsetY + k_SceneHeight, m_Image, true);
-    MyU32 colorWhite = DxLib::GetColor(255, 255, 255);
-    MyU32 colorGray  = DxLib::GetColor(128, 128, 128);
-    MyU32 colorBlack = DxLib::GetColor(  0,   0,   0);
-    DxLib::DrawBox(k_StartButtonX - 2, k_StartButtonY - 2, k_StartButtonX + k_StartButtonW + 2, k_StartButtonY + k_StartButtonH + 2, colorBlack, true);
-    DxLib::DrawBox(k_StartButtonX, k_StartButtonY, k_StartButtonX + k_StartButtonW, k_StartButtonY + k_StartButtonH, (m_bPressReturn ? colorGray : colorWhite), true);
-    DxLib::DrawStringToHandle(k_StartButtonX, k_StartButtonY, "start", colorBlack, m_FontHandle);
+    DxLib::DrawExtendGraph(k_LogoX, k_LogoY, k_LogoX + k_LogoW, k_LogoY + k_LogoH, m_LogoImage, true);
+    m_BtnUI.Draw();
     return k_Success;
 }
 
 MyS32 CTitleScene::Release()
 {
+    DxLib::StopSoundMem(m_BgmHandle);
+    DxLib::DeleteSoundMem(m_BgmHandle);
     // UI解放
     DxLib::DeleteGraph(m_Image);
-    DxLib::DeleteFontToHandle(m_FontHandle);
+    DxLib::DeleteGraph(m_LogoImage);
+    m_BtnUI.Release();
     return k_Success;
 }

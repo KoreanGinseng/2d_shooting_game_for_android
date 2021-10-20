@@ -96,12 +96,6 @@ public:
         @param[out]     var1    var1の説明
         @param[in]      var2    var2の説明
         @param[in,out]  var3    var3の説明
-        @par            Refer
-        - 参照するグローバル変数 global_var1
-        - 参照するグローバル変数 global_var2
-        @par            Modify
-        - 変更するグローバル変数 global_var3
-        - 変更するグローバル変数 global_var4
         @return         成功 k_Success, 失敗 それ以外
     *******************************************************************************/
     int method2(int var1, int var2, int var3) {

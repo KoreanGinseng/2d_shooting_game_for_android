@@ -14,6 +14,7 @@
 #include "EffectEmitter.h"
 #include "ScoreUI.h"
 #include "MissionUI.h"
+#include "ButtonUI.h"
 
 namespace Shooting2D
 {
@@ -63,6 +64,12 @@ namespace Shooting2D
 
         /*! ミッションUI */
         CMissionUI m_MissionUI;
+
+        /*! ボタン */
+        ButtonPtr m_BtnBullet[3];
+
+        /*! ボタンUI */
+        CButtonUI m_BtnUI[3];
 
     public:
 

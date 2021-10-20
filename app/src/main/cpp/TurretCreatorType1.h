@@ -25,7 +25,7 @@ namespace Shooting2D
         MyInt m_BulletImage;
 
     public:
-        CTurretCreatorType1(
+        explicit CTurretCreatorType1(
                 RKMyString list, MyFloat offx, MyFloat offy,
                 MyFloat sx, MyFloat sy, MyS32 wait, MyInt img
                 )
@@ -41,7 +41,7 @@ namespace Shooting2D
 
         virtual ~CTurretCreatorType1() override = default;
 
-        TurretPtr Create() override
+        virtual TurretPtr Create() override
         {
             return std::make_shared<CTurretSimple>(m_ListName,
                     m_OffsetX, m_OffsetY, m_SpeedX, m_SpeedY,

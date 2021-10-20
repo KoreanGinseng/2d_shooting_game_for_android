@@ -73,7 +73,7 @@ namespace Shooting2D
             Regist(key, std::make_unique<CSceneCreator<T>>());
         }
 
-        virtual MyVoid Change(RKMy(SceneKey) key) override
+        virtual MyBool Change(RKMy(SceneKey) key) override
         {
             // 新しいシーンを作成
             ScenePtr scene_tmp = m_SceneMap[key]->Create();
@@ -85,10 +85,15 @@ namespace Shooting2D
             if (m_CurrentScene) { m_CurrentScene->Release(); }
             // 新しいシーンを代入
             m_CurrentScene = scene_tmp;
+            return true;
         }
 
-        virtual MyVoid Change(RKMy(SceneKey) key, SceneChangeEffectPtr effect) override
+        virtual MyBool Change(RKMy(SceneKey) key, SceneChangeEffectPtr effect) override
         {
+            if (m_ChangeEffect)
+            {
+                return false;
+            }
             // 古いシーンとエフェクトを保存
             if (m_CurrentScene)
             {
@@ -97,6 +102,7 @@ namespace Shooting2D
                 m_CurrentScene.reset();
             }
             Change(key);
+            return true;
         }
 
         virtual MyS32 Update() override

@@ -24,10 +24,14 @@ namespace Shooting2D
     constexpr MyS32   k_ColorBitNum     =   16; /*!< 使用色ビット */
 
     /*! タイトル画面 */
-    constexpr MyS32   k_StartButtonW = 150;
-    constexpr MyS32   k_StartButtonH =  30;
+    constexpr MyS32   k_StartButtonW = 300;
+    constexpr MyS32   k_StartButtonH = 150;
     constexpr MyS32   k_StartButtonX = k_SceneOffsetX + (k_SceneWidth - k_StartButtonW) * 0.5f;
     constexpr MyS32   k_StartButtonY = k_SceneOffsetY + k_SceneHeight * 0.5f;
+    constexpr MyS32   k_LogoW = 450;
+    constexpr MyS32   k_LogoH = 200;
+    constexpr MyS32   k_LogoX = k_SceneOffsetX + (k_SceneWidth - k_LogoW) * 0.5f;
+    constexpr MyS32   k_LogoY = k_StartButtonY - k_LogoH * 1.05f;
 
     /*! SE列挙 */
     enum class SEType
@@ -51,19 +55,33 @@ namespace Shooting2D
             "Explosion",
     };
 
+    /*! 画面上ボタン位置定義 */
+    constexpr MyS32 k_BtnBullet_1_x1 = k_SceneWidth * 0.75f;
+    constexpr MyS32 k_BtnBullet_1_y1 = 100;
+    constexpr MyS32 k_BtnBullet_1_x2 = k_SceneWidth * 0.95f;
+    constexpr MyS32 k_BtnBullet_1_y2 = k_BtnBullet_1_y1 + 50;
+
+    constexpr MyS32 k_BtnBullet_2_x1 = k_BtnBullet_1_x1;
+    constexpr MyS32 k_BtnBullet_2_y1 = 160;
+    constexpr MyS32 k_BtnBullet_2_x2 = k_BtnBullet_1_x2;
+    constexpr MyS32 k_BtnBullet_2_y2 = k_BtnBullet_2_y1 + 50;
+
+    constexpr MyS32 k_BtnBullet_3_x1 = k_BtnBullet_1_x1;
+    constexpr MyS32 k_BtnBullet_3_y1 = 220;
+    constexpr MyS32 k_BtnBullet_3_x2 = k_BtnBullet_1_x2;
+    constexpr MyS32 k_BtnBullet_3_y2 = k_BtnBullet_3_y1 + 50;
+
     /*! プレイヤー定義 */
-    constexpr MyS32   k_PlayerBulletWait    = 10;
-    constexpr MyFloat k_PlayerBulletSpeed   = 1.0f;
-    constexpr MyS32   k_PlayerBulletOffsetY = 50;
-    constexpr MyS32   k_PlayerDrawOffsetX   =  5;
-    constexpr MyS32   k_PlayerDrawOffsetY   = 40;
+    constexpr MyS32   k_PlayerBulletWait_1  =    5;
+    constexpr MyS32   k_PlayerBulletWait_2  =    7;
+    constexpr MyS32   k_PlayerBulletWait_3  =   10;
+    constexpr MyFloat k_PlayerBulletSpeed   = 5.0f;
+    constexpr MyS32   k_PlayerBulletOffsetY =   50;
+    constexpr MyS32   k_PlayerDrawOffsetX   =    5;
+    constexpr MyS32   k_PlayerDrawOffsetY   =   40;
 
     constexpr MyS32   k_BulletDrawOffsetX = 3;
     constexpr MyS32   k_BulletDrawOffsetY = 3;
-
-    /*! 敵パラ */
-    constexpr MyS32   k_EnemyBulletWait  = 100;
-    constexpr MyFloat k_EnemyBulletSpeed = 5.0f;
 
     /*! 背景定義 */
     constexpr MyFloat k_ScrollSpeed     = 1.0f; /*!< 背景スクロールスピード */

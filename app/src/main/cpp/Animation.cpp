@@ -24,7 +24,7 @@ CAnimation::~CAnimation()
     MyS32 result = Release();
     if (result != k_Success)
     {
-        MyLOGD("%d : animation release failure\n", result);
+        MyLOGD("%ld : animation release failure\n", result);
     }
 }
 

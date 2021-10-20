@@ -24,7 +24,8 @@ namespace Shooting2D
         MyInt m_TurretImage;
 
         /*! 弾発射用クラス */
-        TurretPtr m_Turret;
+        TurretPtr m_Turret[3];
+        TurretPtr m_TurretCurrent;
 
     public:
 
@@ -67,6 +68,12 @@ namespace Shooting2D
             @return         成功 k_Success, 失敗 それ以外
         *******************************************************************************/
         MyS32 Release();
+
+        /******************************************************************************/
+        /*! 砲台の変更
+            @param[in]      no    変更する砲台番号
+        *******************************************************************************/
+        MyVoid ChangeTurret(MyS32 no);
     };
 
 }

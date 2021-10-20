@@ -10,13 +10,13 @@ using namespace Shooting2D;
 
 CTurretSimple::CTurretSimple(RKMyString list, MyFloat offx,
                              MyFloat offy, MyFloat sx,
-                             MyFloat sy, MyS32 w, MyInt img)
+                             MyFloat sy, MyS32 wait, MyInt img)
     : m_listName(list)
     , m_OffsetX(offx)
     , m_OffsetY(offy)
     , m_SpeedX(sx)
     , m_SpeedY(sy)
-    , m_Interval(w)
+    , m_Interval(wait)
     , m_Wait(0)
     , m_ImageWidth(0)
     , m_ImageHeight(0)

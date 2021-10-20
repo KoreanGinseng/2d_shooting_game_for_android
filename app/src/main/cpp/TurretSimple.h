@@ -29,7 +29,7 @@ namespace Shooting2D
 
     public:
 
-        CTurretSimple(RKMyString list, MyFloat offx, MyFloat offy, MyFloat sx, MyFloat sy, MyS32 w, MyInt img);
+        CTurretSimple(RKMyString list, MyFloat offx, MyFloat offy, MyFloat sx, MyFloat sy, MyS32 wait, MyInt img);
 
         virtual ~CTurretSimple() override;
 

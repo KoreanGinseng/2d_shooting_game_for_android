@@ -7,6 +7,7 @@
 
 #include "GameObject.h"
 #include "TurretCreator.h"
+#include "MoveCreator.h"
 
 namespace Shooting2D
 {
@@ -14,8 +15,6 @@ namespace Shooting2D
     {
     private:
         MyS32   m_HP;
-        MyFloat m_SpeedX;
-        MyFloat m_SpeedY;
 
         MyFloat m_Angle;
 
@@ -23,11 +22,13 @@ namespace Shooting2D
 
         TurretPtr m_Turret;
 
+        MovePtr m_Move;
+
     public:
         CEnemy();
         virtual ~CEnemy() override;
 
-        MyS32 Initialize(MyFloat px, MyFloat py, MyInt img, TurretCreatorPtr tcp);
+        MyS32 Initialize(MyFloat px, MyFloat py, MyInt img, TurretCreatorPtr tcp, MoveCreatorPtr mcp);
 
         MyS32 Update() override;
 

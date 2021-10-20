@@ -15,9 +15,9 @@ namespace Shooting2D
     public:
         virtual ~ISceneChanger() = default;
 
-        virtual MyVoid Change(RKMy(SceneKey) key) = 0;
+        virtual MyBool Change(RKMy(SceneKey) key) = 0;
 
-        virtual MyVoid Change(RKMy(SceneKey) key, SceneChangeEffectPtr effect) = 0;
+        virtual MyBool Change(RKMy(SceneKey) key, SceneChangeEffectPtr effect) = 0;
     };
     using SceneChangerPtr = std::shared_ptr<ISceneChanger>;
 }

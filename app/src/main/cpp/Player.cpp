@@ -4,6 +4,9 @@
 *******************************************************************************/
 #include "Player.h"
 #include "TurretArray.h"
+#include "TurretCreatorTypeThreeWay.h"
+#include "TurretCreatorTypeNearEnemyHoming.h"
+#include "TurretCreatorTypeStraight.h"
 #include <DxLib.h>
 
 using namespace Shooting2D;
@@ -13,9 +16,10 @@ using namespace Shooting2D;
 *******************************************************************************/
 CPlayer::CPlayer()
     : CGameObject()
-    , m_Image(0)
-    ,m_TurretImage(0)
-    , m_Turret()
+    , m_Image(-1)
+    , m_TurretImage(-1)
+    , m_Turret{ nullptr, nullptr, nullptr }
+    , m_TurretCurrent()
 {
 }
 
@@ -53,23 +57,10 @@ MyS32 CPlayer::Load()
     {
         return -1;
     }
-    auto turretArray = std::make_shared<CTurretArray>();
-    // 3発同時発射
-    // 弾の発射オフセット位置定義
-    const MyFloat offset[] = {0, 0, 0};
-    const MyFloat speedX[] = {2, 0, -2};
-    for ( MyS32 cnt = 0; cnt < 3; cnt++)
-    {
-        auto turret_tmp = turretArray->AddTurret<CTurretSimple>
-                (
-                 "PlayerBullet",
-                 offset[cnt],
-                 0.0f, speedX[cnt],
-                 -k_PlayerBulletSpeed, k_PlayerBulletWait,
-                 m_TurretImage
-                 );
-    }
-    m_Turret = turretArray;
+    m_Turret[0] = std::make_shared<CTurretCreatorTypeStraight>("PlayerBullet", 0.0f, 0.0f, 0.0f, -k_PlayerBulletSpeed, k_PlayerBulletWait_1, m_TurretImage)->Create();
+    m_Turret[1] = std::make_shared<CTurretCreatorTypeThreeWay>("PlayerBullet", 0.0f, 0.0f, 0.0f, -k_PlayerBulletSpeed, k_PlayerBulletWait_2, m_TurretImage)->Create();
+    m_Turret[2] = std::make_shared<CTurretCreatorTypeNearEnemyHoming>("PlayerBullet", 0.0f, 0.0f, 0.0f, -k_PlayerBulletSpeed, k_PlayerBulletWait_3, m_TurretImage)->Create();
+    ChangeTurret(0);
     return k_Success;
 }
 
@@ -96,7 +87,7 @@ MyS32 CPlayer::Update()
     if (!m_bShow) { return k_Success; }
 
     // 弾の発射
-    if(m_Turret->Update(m_PosX - k_PlayerDrawOffsetX, m_PosY - k_PlayerBulletOffsetY) == k_Success)
+    if(m_TurretCurrent->Update(m_PosX - k_PlayerDrawOffsetX, m_PosY - k_PlayerBulletOffsetY) == k_Success)
     {
         SEService::GetService()->Play(SEType::Shot);
     }
@@ -123,7 +114,9 @@ MyS32 CPlayer::Draw()
     MyInt drawPosX = static_cast<MyInt>(k_SceneOffsetX + m_PosX) - m_Width  * 0.5f;
     MyInt drawPosY = static_cast<MyInt>(k_SceneOffsetY + m_PosY) - m_Height * 0.5f;
     DxLib::DrawGraph(drawPosX + k_PlayerDrawOffsetX, drawPosY + k_PlayerDrawOffsetY, m_Image, true);
+#ifdef MY_DEBUG
     DxLib::DrawCircle(m_PosX, m_PosY, m_Radius, DxLib::GetColor(0, 0, 0));
+#endif //MY_DEBUG
     return k_Success;
 }
 
@@ -135,6 +128,19 @@ MyS32 CPlayer::Release()
 {
     DxLib::DeleteGraph(m_Image);
     DxLib::DeleteGraph(m_TurretImage);
-    m_Turret.reset();
+    m_TurretCurrent = nullptr;
+    for (MyS32 i = 0; i < 3; i++)
+    {
+        m_Turret[i].reset();
+    }
     return k_Success;
+}
+
+/******************************************************************************/
+/*! 砲台の変更
+    @param[in]      no    変更する砲台番号
+*******************************************************************************/
+MyVoid CPlayer::ChangeTurret(MyS32 no)
+{
+    m_TurretCurrent = m_Turret[no];
 }

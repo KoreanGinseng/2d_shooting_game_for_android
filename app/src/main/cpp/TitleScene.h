@@ -6,16 +6,19 @@
 #define TEST_TITLESCENE_H
 
 #include "Scene.h"
+#include "ButtonUI.h"
 
 namespace Shooting2D
 {
     class CTitleScene : public IScene
     {
     private:
-        MyBool m_bPressReturn;
-        MyBool m_bSceneChange;
-        MyInt  m_Image;
-        MyInt  m_FontHandle;
+        MyBool    m_bSceneChange;
+        MyInt     m_BgmHandle;
+        MyInt     m_Image;
+        MyInt     m_LogoImage;
+        ButtonPtr m_BtnTitle;
+        CButtonUI m_BtnUI;
 
     public:
         CTitleScene();

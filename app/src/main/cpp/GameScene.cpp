@@ -33,6 +33,12 @@ CGameScene::CGameScene()
         , m_ScoreUI(m_Score)
         , m_Mission(std::make_shared<CMission<CMissionHideAllEnemy, CMissionPlayerDead>>())
         , m_MissionUI(m_Mission)
+        , m_BtnBullet{
+    std::make_shared<CButton>(k_BtnBullet_1_x1, k_BtnBullet_1_y1, k_BtnBullet_1_x2, k_BtnBullet_1_y2),
+    std::make_shared<CButton>(k_BtnBullet_2_x1, k_BtnBullet_2_y1, k_BtnBullet_2_x2, k_BtnBullet_2_y2),
+    std::make_shared<CButton>(k_BtnBullet_3_x1, k_BtnBullet_3_y1, k_BtnBullet_3_x2, k_BtnBullet_3_y2)
+    }
+        , m_BtnUI{CButtonUI(m_BtnBullet[0]), CButtonUI(m_BtnBullet[1]), CButtonUI(m_BtnBullet[2])}
 {
 }
 
@@ -97,6 +103,26 @@ MyS32 CGameScene::Load()
     m_SEController->Load(SEType::Explosion, "sounds/se/maoudamashii_explosion_06.ogg");
     SEService::SetService(m_SEController);
 
+    // ボタン読み込み
+    LPKMyS8 files[] =
+    {
+        "image/Button/Wepon_1.png",
+        "image/Button/Wepon_2.png",
+        "image/Button/Wepon_3.png",
+    };
+    for (MyS32 i = 0; i < 3; i++)
+    {
+        MyInt baseImg = DxLib::LoadGraph(files[i]);
+        m_BtnUI[i].Load(
+                DxLib::DerivationGraph(1, 0, 25, 17, baseImg),
+                DxLib::DerivationGraph(35, 0, 25, 17, baseImg),
+                DxLib::DerivationGraph(1, 41, 25, 17, baseImg),
+                DxLib::DerivationGraph(35, 41, 25, 17, baseImg)
+        );
+        DxLib::DeleteGraph(baseImg);
+    }
+    m_BtnUI[0].SetPushFlag(true);
+
     return k_Success;
 }
 
@@ -134,10 +160,29 @@ MyS32 CGameScene::Initialize()
 *******************************************************************************/
 MyS32 CGameScene::Update()
 {
+    // ボタンの更新
+    MyBool bBtnPush = false;
+    for (MyS32 i = 0; i < 3; i++)
+    {
+        if (m_BtnBullet[i]->IsPress())
+        {
+            bBtnPush = true;
+            m_BtnUI[i].SetPushFlag(true);
+            for (MyS32 j = 0; j < 3; j++)
+            {
+                if (j == i) continue;
+                m_BtnUI[j].SetPushFlag(false);
+            }
+            m_Player.ChangeTurret(i);
+        }
+    }
     // 背景の更新
     m_BackGround.Update();
     // プレイヤーの更新
-    m_Player.Update();
+    if (!bBtnPush)
+    {
+        m_Player.Update();
+    }
     // 弾更新
     for (auto& blt : m_PlayerBullets)
     {
@@ -231,6 +276,12 @@ MyS32 CGameScene::Draw()
     {
         efc->Draw();
     }
+    // ボタン描画
+    for (MyS32 i = 0; i < 3; i++)
+    {
+        m_BtnUI[i].Draw();
+    }
+
     // スコア描画
     m_ScoreUI.Draw();
 
@@ -261,9 +312,9 @@ MyS32 CGameScene::Release()
     m_PlayerBullets.clear();
     m_EnemyBullets.clear();
     // 弾リストの削除
-    CSingletonBlackboard<BulletList >::GetInstance().
+    CSingletonBlackboard<BulletList>::GetInstance().
     Get<BulletList>()->Delete("PlayerBullet");
-    CSingletonBlackboard<BulletList >::GetInstance().
+    CSingletonBlackboard<BulletList>::GetInstance().
     Get<BulletList>()->Delete("EnemyBullet");
     // 敵管理開放
     m_EnemyManager.Release();
@@ -279,6 +330,12 @@ MyS32 CGameScene::Release()
         .Get<EffectEmitterPtr>()->Delete(k_EmitterBoardName[i]);
     }
     m_EmitterArray.clear();
+
+    // ボタン削除
+    for (MyS32 i = 0; i < 3; i++)
+    {
+        m_BtnUI[i].Release();
+    }
 
     // スコア削除
     CSingletonBlackboard<ScorePtr>::GetInstance().Get<ScorePtr>()->Delete("Score");

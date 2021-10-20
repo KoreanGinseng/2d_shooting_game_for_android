@@ -38,7 +38,14 @@ add_library( # Sets the name of the library.
              Effect.cpp
              TitleScene.cpp
              OverScene.cpp
-             ClearScene.cpp)
+             ClearScene.cpp
+             MoveSimple.cpp
+             MoveSideReflect.cpp
+             BulletHoming.cpp
+             TurretHoming.cpp
+             Button.cpp
+             ButtonUI.cpp
+             MoveCenterReturn.cpp)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by

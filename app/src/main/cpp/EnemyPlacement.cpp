@@ -12,6 +12,7 @@ CEnemyPlacement::CEnemyPlacement()
     , m_ImageArray()
     , m_BulletImageArray()
     , m_TurretPatternArray()
+    , m_MovePatternArray()
 {
 }
 
@@ -47,8 +48,14 @@ MyVoid CEnemyPlacement::AddAppear(MyFloat px, MyFloat py, MyFloat scroll, MyS32 
     m_Placement.push_back({px, py, scroll, type});
 }
 
-MyVoid CEnemyPlacement::AddTurretPattern(Shooting2D::TurretCreatorPtr ptr){
+MyVoid CEnemyPlacement::AddTurretPattern(TurretCreatorPtr ptr)
+{
     m_TurretPatternArray.push_back(ptr);
+}
+
+MyVoid CEnemyPlacement::AddMovePattern(MoveCreatorPtr ptr)
+{
+    m_MovePatternArray.push_back(ptr);
 }
 
 MyVoid CEnemyPlacement::Release()
@@ -83,6 +90,11 @@ RKMy(CEnemyPlacement::Appear) CEnemyPlacement::GetAppear(MyS32 n) const noexcept
 RKMy(TurretCreatorPtr) CEnemyPlacement::GetTurretPattern(MyS32 n) const noexcept
 {
     return m_TurretPatternArray[n];
+}
+
+RKMy(MoveCreatorPtr) CEnemyPlacement::GetMovePattern(MyS32 n) const noexcept
+{
+    return m_MovePatternArray[n];
 }
 
 const size_t CEnemyPlacement::GetAppearCount() const noexcept

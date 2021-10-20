@@ -59,6 +59,9 @@ MyS32 CBullet::Draw()
     MyInt drawPosX = k_SceneOffsetX + m_PosX + k_BulletDrawOffsetX;
     MyInt drawPosY = k_SceneOffsetY + m_PosY + k_BulletDrawOffsetY;
     DxLib::DrawRotaGraph(drawPosX,  drawPosY, 1.0f, m_Angle, m_Image, true);
+
+#ifdef MY_DEBUG
     DxLib::DrawCircle(m_PosX, m_PosY, m_Radius, DxLib::GetColor(0, 0, 0));
+#endif //MY_DEBUG
     return k_Success;
 }

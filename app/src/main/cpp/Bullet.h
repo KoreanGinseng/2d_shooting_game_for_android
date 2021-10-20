@@ -11,7 +11,7 @@ namespace Shooting2D
 {
     class CBullet : public CGameObject
     {
-    private:
+    protected:
         /*! 弾の移動速度 */
         MyFloat m_SpeedX;
         MyFloat m_SpeedY;
@@ -27,7 +27,7 @@ namespace Shooting2D
 
         virtual ~CBullet() override;
 
-        MyS32 Initialize(MyFloat px, MyFloat py, MyFloat sx, MyFloat sy, MyS32 iw, MyS32 ih, MyInt img);
+        virtual MyS32 Initialize(MyFloat px, MyFloat py, MyFloat sx, MyFloat sy, MyS32 iw, MyS32 ih, MyInt img);
 
         virtual MyS32 Update() override;
 

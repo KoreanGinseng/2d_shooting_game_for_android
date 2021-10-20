@@ -39,7 +39,11 @@ MyS32 CEnemyManager::Update(MyFloat scroll)
     {
         auto& enemyAppear = m_Placement.GetAppear(m_CurrentAppear++);
         auto enemy_tmp = std::make_shared<CEnemy>();
-        enemy_tmp->Initialize(enemyAppear.posX, enemyAppear.posY, m_Placement.GetImage(enemyAppear.type), m_Placement.GetTurretPattern(enemyAppear.type));
+        enemy_tmp->Initialize(
+                enemyAppear.posX, enemyAppear.posY,
+                m_Placement.GetImage(enemyAppear.type),
+                m_Placement.GetTurretPattern(enemyAppear.type),
+                m_Placement.GetMovePattern(enemyAppear.type));
         m_EnemyList.push_back(enemy_tmp);
     }
     // 敵更新
