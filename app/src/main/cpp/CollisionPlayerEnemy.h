@@ -21,14 +21,16 @@ namespace Shooting2D
     {
         // どちらかが非表示
         if (!player.IsShow() || !enemy.IsShow()) { return; }
+        // プレイヤーがダメージ中
+        if (player.GetHitCount() > 0) { return; }
         // 判定
         if (!CollisionGameObject(player, enemy))
         {
             // 接触なし
             return;
         }
-        // プレイヤーを非表示にする
-        player.SetShow(false);
+        // プレイヤーにダメージ
+        player.Damage(1);
         // エフェクト発生
         CSingletonBlackboard<EffectEmitterPtr>::GetInstance()
                 .Get<EffectEmitterPtr>("Explosion")->Emit(player.GetPosX(), player.GetPosY());

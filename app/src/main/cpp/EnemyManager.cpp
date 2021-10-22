@@ -64,8 +64,14 @@ MyS32 CEnemyManager::Update(MyFloat scroll)
                 enemyAppear.posX, enemyAppear.posY,
                 m_Placement.GetImage(enemyAppear.type),
                 m_Placement.GetTurretPattern(enemyAppear.type),
-                m_Placement.GetMovePattern(enemyAppear.type));
+                m_Placement.GetMovePattern(enemyAppear.type)
+                );
         m_EnemyList.push_back(enemy_tmp);
+        // 最後に出現するのはボスなのでHPを底上げ
+        if (m_Placement.GetAppearCount() == m_CurrentAppear)
+        {
+            enemy_tmp->Damage(-97);
+        }
     }
     // 敵更新
     for (auto& enemy : m_EnemyList)

@@ -281,6 +281,15 @@ MyS32 CGameScene::Draw()
     {
         m_BtnUI[i].Draw();
     }
+    // プレイヤー体力描画
+    for(MyS32 i = 0; i < k_PlayerHP; i++)
+    {
+        MyS32 length = (k_PlayerHPBarW / k_PlayerHP);
+        MyS32 x = k_PlayerHPBarX1 + length * i;
+        MyU32 color = ((i + 1 <= m_Player.GetHP()) ? (DxLib::GetColor(8, 128, 8)) : (DxLib::GetColor(32, 32, 32)));
+        DxLib::DrawBox(x, k_PlayerHPBarY1, x + length, k_PlayerHPBarY2, DxLib::GetColor(0, 0, 0), TRUE);
+        DxLib::DrawBox(x + 1, k_PlayerHPBarY1 + 1, x + length - 1, k_PlayerHPBarY2 - 1, color, TRUE);
+    }
 
     // スコア描画
     m_ScoreUI.Draw();

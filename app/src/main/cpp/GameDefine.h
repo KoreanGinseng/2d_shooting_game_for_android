@@ -5,6 +5,8 @@
 #ifndef GAMEDEFINE_H
 #define GAMEDEFINE_H
 
+//#define MY_DEBUG
+
 #include "Common.h"
 #include <cmath>
 #include <algorithm>
@@ -56,25 +58,37 @@ namespace Shooting2D
     };
 
     /*! 画面上ボタン位置定義 */
-    constexpr MyS32 k_BtnBullet_1_x1 = k_SceneWidth * 0.75f;
-    constexpr MyS32 k_BtnBullet_1_y1 = 100;
-    constexpr MyS32 k_BtnBullet_1_x2 = k_SceneWidth * 0.95f;
-    constexpr MyS32 k_BtnBullet_1_y2 = k_BtnBullet_1_y1 + 50;
+    constexpr MyS32 k_BtnBulletMargin = k_SceneWidth  * 0.05f;
+    constexpr MyS32 k_BtnBulletW      = k_SceneWidth  * 0.20f;
+    constexpr MyS32 k_BtnBulletH      = k_SceneHeight * 0.05f;
 
-    constexpr MyS32 k_BtnBullet_2_x1 = k_BtnBullet_1_x1;
-    constexpr MyS32 k_BtnBullet_2_y1 = 160;
-    constexpr MyS32 k_BtnBullet_2_x2 = k_BtnBullet_1_x2;
-    constexpr MyS32 k_BtnBullet_2_y2 = k_BtnBullet_2_y1 + 50;
+    constexpr MyS32 k_BtnBullet_1_x1 = k_BtnBulletMargin;
+    constexpr MyS32 k_BtnBullet_1_y1 = k_SceneHeight * 0.89f;
+    constexpr MyS32 k_BtnBullet_1_x2 = k_BtnBullet_1_x1 + k_BtnBulletW;
+    constexpr MyS32 k_BtnBullet_1_y2 = k_BtnBullet_1_y1 + k_BtnBulletH;
 
-    constexpr MyS32 k_BtnBullet_3_x1 = k_BtnBullet_1_x1;
-    constexpr MyS32 k_BtnBullet_3_y1 = 220;
-    constexpr MyS32 k_BtnBullet_3_x2 = k_BtnBullet_1_x2;
-    constexpr MyS32 k_BtnBullet_3_y2 = k_BtnBullet_3_y1 + 50;
+    constexpr MyS32 k_BtnBullet_2_x1 = k_BtnBullet_1_x2 + k_BtnBulletMargin;
+    constexpr MyS32 k_BtnBullet_2_y1 = k_BtnBullet_1_y1;
+    constexpr MyS32 k_BtnBullet_2_x2 = k_BtnBullet_2_x1 + k_BtnBulletW;
+    constexpr MyS32 k_BtnBullet_2_y2 = k_BtnBullet_1_y2;
+
+    constexpr MyS32 k_BtnBullet_3_x1 = k_BtnBullet_2_x2 + k_BtnBulletMargin;
+    constexpr MyS32 k_BtnBullet_3_y1 = k_BtnBullet_1_y1;
+    constexpr MyS32 k_BtnBullet_3_x2 = k_BtnBullet_3_x1 + k_BtnBulletW;
+    constexpr MyS32 k_BtnBullet_3_y2 = k_BtnBullet_1_y2;
 
     /*! プレイヤー定義 */
+    constexpr MyS32   k_PlayerHPBarX1       = k_SceneWidth  * 0.05f;
+    constexpr MyS32   k_PlayerHPBarY1       = k_SceneHeight * 0.95f;
+    constexpr MyS32   k_PlayerHPBarX2       = k_SceneWidth  * 0.95f;
+    constexpr MyS32   k_PlayerHPBarY2       = k_SceneHeight * 0.98f;
+    constexpr MyS32   k_PlayerHPBarW        = k_PlayerHPBarX2 - k_PlayerHPBarX1;
+    constexpr MyS32   k_PlayerHPBarH        = k_PlayerHPBarY2 - k_PlayerHPBarY1;
+    constexpr MyS32   k_PlayerHP            =   10;
+    constexpr MyS32   k_PlayerHitRadius     =   27;
     constexpr MyS32   k_PlayerBulletWait_1  =    5;
-    constexpr MyS32   k_PlayerBulletWait_2  =    7;
-    constexpr MyS32   k_PlayerBulletWait_3  =   10;
+    constexpr MyS32   k_PlayerBulletWait_2  =   10;
+    constexpr MyS32   k_PlayerBulletWait_3  =   14;
     constexpr MyFloat k_PlayerBulletSpeed   = 5.0f;
     constexpr MyS32   k_PlayerBulletOffsetY =   50;
     constexpr MyS32   k_PlayerDrawOffsetX   =    5;

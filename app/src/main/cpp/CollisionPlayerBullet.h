@@ -22,14 +22,16 @@ namespace Shooting2D
     {
         // どちらかが非表示
         if (!player.IsShow() || !bullet.IsShow()) { return; }
+        // プレイヤーがダメージ中
+        if (player.GetHitCount() > 0) { return; }
         // 判定
         if (!CollisionGameObject(player, bullet))
         {
             // 接触なし
             return;
         }
-        // プレイヤーを非表示にする
-        player.SetShow(false);
+        // プレイヤーにダメージ
+        player.Damage(1);
         // 弾は接触で非表示
         bullet.SetShow(false);
         // エフェクト発生

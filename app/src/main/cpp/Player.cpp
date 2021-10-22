@@ -7,6 +7,8 @@
 #include "TurretCreatorTypeThreeWay.h"
 #include "TurretCreatorTypeNearEnemyHoming.h"
 #include "TurretCreatorTypeStraight.h"
+#include "EffectEmitter.h"
+#include "Score.h"
 #include <DxLib.h>
 
 using namespace Shooting2D;
@@ -20,6 +22,8 @@ CPlayer::CPlayer()
     , m_TurretImage{ -1, -1, -1 }
     , m_Turret{ nullptr, nullptr, nullptr }
     , m_TurretCurrent()
+    , m_HP(k_PlayerHP)
+    , m_HitCount(0)
 {
 }
 
@@ -49,7 +53,7 @@ MyS32 CPlayer::Load()
     m_Width  = w;
     m_Height = h;
     // 判定半径設定
-    m_Radius = 10;
+    m_Radius = k_PlayerHitRadius;
 
     // 弾発射用クラスの作成
     m_TurretImage[0] = DxLib::LoadGraph("image/Bullets/05Bullets.png");
@@ -84,6 +88,8 @@ MyS32 CPlayer::Update()
     // 非表示のため動作なし
     if (!m_bShow) { return k_Success; }
 
+    if(m_HitCount > 0) { m_HitCount--; }
+
     // 弾の発射
     if(m_TurretCurrent->Update(m_PosX - k_PlayerDrawOffsetX, m_PosY - k_PlayerBulletOffsetY) == k_Success)
     {
@@ -109,6 +115,8 @@ MyS32 CPlayer::Draw()
 {
     // 非表示のため描画なし
     if (!m_bShow) { return k_Success; }
+    // ダメージ受けた場合３frameごとに点滅
+    if (m_HitCount > 0 && m_HitCount % 3 == 0) { return k_Success; }
     MyInt drawPosX = static_cast<MyInt>(k_SceneOffsetX + m_PosX) - m_Width  * 0.5f;
     MyInt drawPosY = static_cast<MyInt>(k_SceneOffsetY + m_PosY) - m_Height * 0.5f;
     DxLib::DrawGraph(drawPosX + k_PlayerDrawOffsetX, drawPosY + k_PlayerDrawOffsetY, m_Image, true);
@@ -143,4 +151,23 @@ MyS32 CPlayer::Release()
 MyVoid CPlayer::ChangeTurret(MyS32 no)
 {
     m_TurretCurrent = m_Turret[no];
+}
+
+/******************************************************************************/
+/*! ダメージ処理
+    @param[in]      dmg    ダメージ
+*******************************************************************************/
+MyVoid CPlayer::Damage(MyS32 dmg)
+{
+    m_HP -= dmg;
+    m_HitCount = 60;
+    // HPがなくなれば非表示にする
+    if (m_HP <= 0)
+    {
+        SEService::GetService()->Play(SEType::Explosion);
+        m_bShow = false;
+        // エフェクト発生
+        CSingletonBlackboard<EffectEmitterPtr>::GetInstance()
+                .Get<EffectEmitterPtr>("Explosion")->Emit(m_PosX, m_PosY);
+    }
 }

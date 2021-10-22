@@ -37,14 +37,24 @@ namespace Shooting2D
         *******************************************************************************/
         virtual TurretPtr Create() override
         {
-            return std::make_shared<CTurretSimple>(m_ListName,
-                    m_OffsetX, m_OffsetY, m_SpeedX, m_SpeedY,
-                    m_Interval, m_BulletImage)
-                    ->Decorate<CTurretRandomRotater>(10.0f)
-                    ->Decorate<CTurretPlayerLockon>(m_SpeedY)
-                    ->Decorate<CTurretWait>(1)
-                    ->Decorate<CTurretCounterReset>(10)
-                    ->Decorate<CTurretCounterWait>(10, 30);
+            auto turretArray = std::make_shared<CTurretArray>();
+            turretArray->AddTurret(
+                    std::make_shared<CTurretSimple>(
+                            m_ListName, m_OffsetX, m_OffsetY, m_SpeedX, m_SpeedY,
+                            m_Interval, m_BulletImage)
+                            ->Decorate<CTurretRandomRotater>(10.0f)
+                            ->Decorate<CTurretPlayerLockon>(m_SpeedY)
+                            ->Decorate<CTurretWait>(1)
+                            ->Decorate<CTurretCounterReset>(10)
+                            ->Decorate<CTurretCounterWait>(10, 30));
+            turretArray->AddTurret(
+                    std::make_shared<CTurretSimple>(
+                            m_ListName, m_OffsetX, m_OffsetY, m_SpeedX, m_SpeedY,
+                            m_Interval, m_BulletImage)
+                    ->Decorate<CTurretRotater>(36.0f)
+                    ->Decorate<CTurretContinuous>(10)
+                    ->Decorate<CTurretWait>(10));
+            return turretArray;
         }
     };
 }

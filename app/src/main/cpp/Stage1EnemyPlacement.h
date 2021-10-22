@@ -16,6 +16,7 @@
 #include "MoveCreatorType1.h"
 #include "MoveCreatorType2.h"
 #include "MoveCreatorType3.h"
+#include "MoveCreatorType4.h"
 
 namespace Shooting2D
 {
@@ -49,11 +50,13 @@ namespace Shooting2D
             placement.AddImage("image/Enemy/Enemy08.png");
             placement.AddImage("image/Enemy/Enemy13.png");
             placement.AddImage("image/Enemy/Enemy06.png");
-            placement.AddBulletImage("image/Bullets/02Bullets.png");
+            placement.AddImage("image/Enemy/Enemy14.png");
+            placement.AddBulletImage("image/Bullets/09Bullets.png");
             placement.AddBulletImage("image/Bullets/01Bullets.png");
             placement.AddBulletImage("image/Bullets/04Bullets.png");
             placement.AddBulletImage("image/Bullets/08Bullets.png");
             placement.AddBulletImage("image/Bullets/03Bullets.png");
+            placement.AddBulletImage("image/Bullets/02Bullets.png");
 
             // 弾パターンの登録
             placement.AddTurretPattern( // 乱射１
@@ -124,8 +127,14 @@ namespace Shooting2D
                             0.0f, 2.0f
                             )
                     );
+            placement.AddMovePattern( // ボスの移動
+                    std::make_shared<CMoveCreatorType4>(
+                            1.0f, 2.0f, 300.0f
+                            )
+                    );
 
             // 配置
+            /**/
             placement.AddAppear(120.0f, 0.0f, 100.0f, 3);
             placement.AddAppear(120.0f, 0.0f, 200.0f, 3);
             placement.AddAppear(120.0f, 0.0f, 300.0f, 3);
@@ -153,6 +162,11 @@ namespace Shooting2D
             placement.AddAppear(340.0f, 0.0f, 2020.0f, 1);
             placement.AddAppear(340.0f, 0.0f, 2040.0f, 1);
             placement.AddAppear(340.0f, 0.0f, 2060.0f, 1);
+
+            placement.AddAppear(270.0f, 0.0f, 2200.0f, 5);
+            /*/ボス確認用
+            placement.AddAppear(270.0f, 0.0f, 100.0f, 5);
+            /**/
         }
     };
 }
