@@ -17,7 +17,7 @@ using namespace Shooting2D;
 CPlayer::CPlayer()
     : CGameObject()
     , m_Image(-1)
-    , m_TurretImage(-1)
+    , m_TurretImage{ -1, -1, -1 }
     , m_Turret{ nullptr, nullptr, nullptr }
     , m_TurretCurrent()
 {
@@ -52,14 +52,12 @@ MyS32 CPlayer::Load()
     m_Radius = 10;
 
     // 弾発射用クラスの作成
-    m_TurretImage = DxLib::LoadGraph("image/Bullets/06Bullets.png");
-    if (m_TurretImage == -1)
-    {
-        return -1;
-    }
-    m_Turret[0] = std::make_shared<CTurretCreatorTypeStraight>("PlayerBullet", 0.0f, 0.0f, 0.0f, -k_PlayerBulletSpeed, k_PlayerBulletWait_1, m_TurretImage)->Create();
-    m_Turret[1] = std::make_shared<CTurretCreatorTypeThreeWay>("PlayerBullet", 0.0f, 0.0f, 0.0f, -k_PlayerBulletSpeed, k_PlayerBulletWait_2, m_TurretImage)->Create();
-    m_Turret[2] = std::make_shared<CTurretCreatorTypeNearEnemyHoming>("PlayerBullet", 0.0f, 0.0f, 0.0f, -k_PlayerBulletSpeed, k_PlayerBulletWait_3, m_TurretImage)->Create();
+    m_TurretImage[0] = DxLib::LoadGraph("image/Bullets/05Bullets.png");
+    m_TurretImage[1] = DxLib::LoadGraph("image/Bullets/06Bullets.png");
+    m_TurretImage[2] = DxLib::LoadGraph("image/Bullets/07Bullets.png");
+    m_Turret[0] = std::make_shared<CTurretCreatorTypeStraight>("PlayerBullet", 0.0f, 0.0f, 0.0f, -k_PlayerBulletSpeed, k_PlayerBulletWait_1, m_TurretImage[0])->Create();
+    m_Turret[1] = std::make_shared<CTurretCreatorTypeThreeWay>("PlayerBullet", 0.0f, 0.0f, 0.0f, -k_PlayerBulletSpeed, k_PlayerBulletWait_2, m_TurretImage[1])->Create();
+    m_Turret[2] = std::make_shared<CTurretCreatorTypeNearEnemyHoming>("PlayerBullet", 0.0f, 0.0f, 0.0f, -k_PlayerBulletSpeed, k_PlayerBulletWait_3, m_TurretImage[2])->Create();
     ChangeTurret(0);
     return k_Success;
 }
@@ -127,7 +125,9 @@ MyS32 CPlayer::Draw()
 MyS32 CPlayer::Release()
 {
     DxLib::DeleteGraph(m_Image);
-    DxLib::DeleteGraph(m_TurretImage);
+    DxLib::DeleteGraph(m_TurretImage[0]);
+    DxLib::DeleteGraph(m_TurretImage[1]);
+    DxLib::DeleteGraph(m_TurretImage[2]);
     m_TurretCurrent = nullptr;
     for (MyS32 i = 0; i < 3; i++)
     {

@@ -1,6 +1,7 @@
-//
-// Created by akasu on 2021/10/09.
-//
+/******************************************************************************/
+/*! @file       ExplosionEffectEmitter.h
+    @brief      エフェクト放出機クラス定義ファイル
+*******************************************************************************/
 
 #ifndef EXPLOSIONEFFECTEMITTER_H
 #define EXPLOSIONEFFECTEMITTER_H
@@ -10,11 +11,22 @@
 
 namespace Shooting2D
 {
+    /******************************************************************************/
+    /*! @class CExplosionEffectEmitter
+        @brief  エフェクト放出機クラス
+    *******************************************************************************/
     class CExplosionEffectEmitter : public IEffectEmitter
     {
     protected:
+
+        /*! アニメーションリスト */
         AnimationListPtr m_AnimationList;
 
+        /******************************************************************************/
+        /*! 生成
+            @param[in]      bimg       ベース画像ID
+            @return         成功 k_Success, 失敗 それ以外
+        *******************************************************************************/
         virtual MyS32 Create(MyInt bimg) override
         {
             m_AnimationList = std::make_shared<CAnimationList>(1);
@@ -28,13 +40,25 @@ namespace Shooting2D
         }
 
     public:
+
+        /******************************************************************************/
+        /*! コンストラクタ
+        *******************************************************************************/
         CExplosionEffectEmitter()
             : m_AnimationList()
         {
         }
 
+        /******************************************************************************/
+        /*! デストラクタ
+        *******************************************************************************/
         virtual ~CExplosionEffectEmitter() override = default;
 
+        /******************************************************************************/
+        /*! エフェクト放出機の生成
+            @param[in]      bimg       ベース画像ID
+            @return         エミッターポインタ
+        *******************************************************************************/
         static EffectEmitterPtr CreateEmitter(MyInt bimg)
         {
             auto result = std::make_shared<CExplosionEffectEmitter>();
@@ -42,6 +66,12 @@ namespace Shooting2D
             return result;
         }
 
+        /******************************************************************************/
+        /*! エフェクトの発生
+            @param[in]      px       発生座標X
+            @param[in]      py       発生座標Y
+            @return         エフェクトポインタ
+        *******************************************************************************/
         virtual EffectPtr Emit(MyFloat px, MyFloat py) override
         {
             SEService::GetService()->Play(SEType::Explosion);

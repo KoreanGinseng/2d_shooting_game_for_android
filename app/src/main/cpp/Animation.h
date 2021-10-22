@@ -76,13 +76,19 @@ namespace Shooting2D
             @param[in]      n    取得するフレーム番号
             @return         成功 k_Success, 失敗 それ以外
         *******************************************************************************/
-        RKMy(Frame) GetFrame(MyS32 n) const noexcept;
+        RKMy(Frame) GetFrame(MyS32 n) const noexcept
+        {
+            return m_FrameArray[n];
+        }
 
         /******************************************************************************/
         /*! フレーム数取得
             @return         フレーム数
         *******************************************************************************/
-        size_t GetFrameCount() const noexcept;
+        size_t GetFrameCount() const noexcept
+        {
+            return m_FrameArray.size();
+        }
     };
 
     /*! @brief ポインタ置き換え */

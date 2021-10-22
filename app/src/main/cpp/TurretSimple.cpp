@@ -1,6 +1,8 @@
-//
-// Created by akasu on 2021/10/05.
-//
+/******************************************************************************/
+/*! @file       TurretSimple.cpp
+    @brief      シンプルな弾発射処理クラス実装ファイル
+*******************************************************************************/
+
 
 #include "TurretSimple.h"
 #include "GameDefine.h"
@@ -8,6 +10,16 @@
 
 using namespace Shooting2D;
 
+/******************************************************************************/
+/*! コンストラクタ
+    @param[in]      list    登録リスト名
+    @param[in]      offx    オフセット位置X
+    @param[in]      offy    オフセット位置Y
+    @param[in]      sx      弾スピードX
+    @param[in]      sy      弾スピードY
+    @param[in]      wait    発射間隔
+    @param[in]      img     弾画像ID
+*******************************************************************************/
 CTurretSimple::CTurretSimple(RKMyString list, MyFloat offx,
                              MyFloat offy, MyFloat sx,
                              MyFloat sy, MyS32 wait, MyInt img)
@@ -27,16 +39,29 @@ CTurretSimple::CTurretSimple(RKMyString list, MyFloat offx,
     m_ImageWidth = iw; m_ImageHeight = ih;
 }
 
+/******************************************************************************/
+/*! デストラクタ
+*******************************************************************************/
 CTurretSimple::~CTurretSimple()
 {
 }
 
+/******************************************************************************/
+/*! タレットの初期化
+    @return         成功 k_Success, 失敗 それ以外
+*******************************************************************************/
 MyS32 CTurretSimple::Initialize()
 {
     m_Wait = 0;
     return k_Success;
 }
 
+/******************************************************************************/
+/*! タレットの更新
+    @param[in]      px    対象の座標X
+    @param[in]      py    対象の座標Y
+    @return         成功 k_Success, 失敗 それ以外
+*******************************************************************************/
 MyS32 CTurretSimple::Update(MyFloat px, MyFloat py)
 {
     // ウェイトの減少
@@ -54,41 +79,4 @@ MyS32 CTurretSimple::Update(MyFloat px, MyFloat py)
     blt->Initialize(px + m_OffsetX, py + m_OffsetY, m_SpeedX, m_SpeedY, m_ImageWidth, m_ImageHeight, m_BulletImage);
     list.push_back(blt);
     return k_Success;
-}
-
-MyFloat CTurretSimple::GetOffsetX() const noexcept
-{
-    return m_OffsetX;
-}
-
-MyFloat CTurretSimple::GetOffsetY() const noexcept
-{
-    return m_OffsetY;
-}
-
-MyFloat CTurretSimple::GetSpeedX() const noexcept
-{
-    return m_SpeedX;
-}
-
-MyFloat CTurretSimple::GetSpeedY() const noexcept
-{
-    return m_SpeedY;
-}
-
-MyVoid CTurretSimple::SetOffset(MyFloat sx, MyFloat sy)
-{
-    m_OffsetX = sx;
-    m_OffsetY = sy;
-}
-
-MyVoid CTurretSimple::SetSpeed(MyFloat sx, MyFloat sy)
-{
-    m_SpeedX = sx;
-    m_SpeedY = sy;
-}
-
-MyBool CTurretSimple::IsFire() const noexcept
-{
-    return m_Wait <= 1;
 }

@@ -1,6 +1,7 @@
-//
-// Created by akasu on 2021/10/05.
-//
+/******************************************************************************/
+/*! @file       SingletonBlackboard.h
+    @brief      シングルトンブラックボードクラス定義ファイル
+*******************************************************************************/
 
 #ifndef SINGLETONBLACKBOARD_H
 #define SINGLETONBLACKBOARD_H
@@ -10,6 +11,10 @@
 
 namespace Shooting2D
 {
+    /******************************************************************************/
+    /*! @class CSingletonBlackboard
+        @brief  ブラックボードクラスをシングルトンとしてアクセスする用クラス
+    *******************************************************************************/
     template < typename... Types >
     class CSingletonBlackboard : public CSingleton<CBlackboard<Types...>>
     {

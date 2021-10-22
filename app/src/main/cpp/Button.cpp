@@ -1,12 +1,20 @@
-//
-// Created by akasu on 2021/10/13.
-//
+/******************************************************************************/
+/*! @file       Button.cpp
+    @brief      ボタンクラス実装ファイル
+*******************************************************************************/
 
 #include <DxLib.h>
 #include "Button.h"
 
 using namespace Shooting2D;
 
+/******************************************************************************/
+/*! コンストラクタ
+    @param[in]      l    左
+    @param[in]      t    上
+    @param[in]      r    右
+    @param[in]      b    下
+*******************************************************************************/
 CButton::CButton(MyFloat l, MyFloat t, MyFloat r, MyFloat b)
     : m_Top(t)
     , m_Bottom(b)
@@ -18,10 +26,17 @@ CButton::CButton(MyFloat l, MyFloat t, MyFloat r, MyFloat b)
 {
 }
 
+/******************************************************************************/
+/*! デストラクタ
+*******************************************************************************/
 CButton::~CButton()
 {
 }
 
+/******************************************************************************/
+/*! このフレーム押しているか
+    @return         true 押してる, false 押してない
+*******************************************************************************/
 MyBool CButton::IsPress() noexcept
 {
     MyS32 touchNum = DxLib::GetTouchInputNum();
@@ -33,6 +48,10 @@ MyBool CButton::IsPress() noexcept
     return (m_Left <= posX && m_Top <= posY && m_Right >= posX && m_Bottom >= posY);
 }
 
+/******************************************************************************/
+/*! ボタンから離れたか
+    @return         true 離れた, false 押してないor押してる
+*******************************************************************************/
 MyBool CButton::IsPull() noexcept
 {
     if (IsPress())
@@ -45,44 +64,4 @@ MyBool CButton::IsPull() noexcept
         return (m_Left <= m_PrevX && m_Top <= m_PrevY && m_Right >= m_PrevX && m_Bottom >= m_PrevY);
     }
     return false;
-}
-
-MyFloat CButton::GetPosX() const noexcept
-{
-    return m_Left;
-}
-
-MyFloat CButton::GetPosY() const noexcept
-{
-    return m_Top;
-}
-
-MyFloat CButton::GetWidth() const noexcept
-{
-    return m_Right - m_Left;
-}
-
-MyFloat CButton::GetHeight() const noexcept
-{
-    return m_Bottom - m_Top;
-}
-
-MyFloat CButton::GetLeft() const noexcept
-{
-    return m_Left;
-}
-
-MyFloat CButton::GetTop() const noexcept
-{
-    return m_Top;
-}
-
-MyFloat CButton::GetRight() const noexcept
-{
-    return m_Right;
-}
-
-MyFloat CButton::GetBottom() const noexcept
-{
-    return m_Bottom;
 }

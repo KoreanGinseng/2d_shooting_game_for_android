@@ -1,6 +1,7 @@
-//
-// Created by akasu on 2021/10/06.
-//
+/******************************************************************************/
+/*! @file       EnemyPlacement.h
+    @brief      敵配置情報クラス定義ファイル
+*******************************************************************************/
 
 #ifndef ENEMYPLACEMENT_H
 #define ENEMYPLACEMENT_H
@@ -13,49 +14,156 @@
 
 namespace Shooting2D
 {
+
+    /******************************************************************************/
+    /*! @class CEnemyPlacement
+        @brief  敵配置情報クラス
+    *******************************************************************************/
     class CEnemyPlacement
     {
     private:
+        /******************************************************************************/
+        /*! @struct Appear
+            @brief  配置情報構造体
+        *******************************************************************************/
         struct Appear
         {
+            /*! 出現位置 */
             MyFloat posX;
             MyFloat posY;
 
+            /*! 出現スクロール値 */
             MyFloat scroll;
 
-            MyS32 type;
+            /*! 敵タイプ */
+            MyS32   type;
         };
 
-        std::vector<MyInt>  m_ImageArray;
-        std::vector<Appear> m_Placement;
-        std::vector<MyInt>  m_BulletImageArray;
+        /*! 配置情報配列 */
+        std::vector<Appear>           m_Placement;
+        /*! 敵画像ID */
+        std::vector<MyInt>            m_ImageArray;
+        /*! 弾画像ID */
+        std::vector<MyInt>            m_BulletImageArray;
+        /*! 砲台生成機配列 */
         std::vector<TurretCreatorPtr> m_TurretPatternArray;
-        std::vector<MoveCreatorPtr> m_MovePatternArray;
+        /*! 移動生成機配列 */
+        std::vector<MoveCreatorPtr>   m_MovePatternArray;
 
     public:
+
+        /******************************************************************************/
+        /*! コンストラクタ
+        *******************************************************************************/
         CEnemyPlacement();
 
+        /******************************************************************************/
+        /*! デストラクタ
+        *******************************************************************************/
         ~CEnemyPlacement();
 
+        /******************************************************************************/
+        /*! 敵画像の追加
+            @param[in]      fileName    画像ファイルパス
+            @return         成功 k_Success, 失敗 それ以外
+        *******************************************************************************/
         MyS32 AddImage(LPKMyS8 fileName);
 
+        /******************************************************************************/
+        /*! 弾画像の追加
+            @param[in]      fileName    画像ファイルパス
+            @return         成功 k_Success, 失敗 それ以外
+        *******************************************************************************/
         MyS32 AddBulletImage(LPKMyS8 fileName);
 
+        /******************************************************************************/
+        /*! 出現情報の追加
+            @param[in]      px        出現位置X
+            @param[in]      py        出現位置Ｙ
+            @param[in]      scroll    出現スクロール
+            @param[in]      type      種類
+        *******************************************************************************/
         MyVoid AddAppear(MyFloat px, MyFloat py, MyFloat scroll, MyS32 type);
 
+        /******************************************************************************/
+        /*! 砲台生成機の追加
+            @param[in]      ptr        生成機
+        *******************************************************************************/
         MyVoid AddTurretPattern(TurretCreatorPtr ptr);
 
+        /******************************************************************************/
+        /*! 移動生成機の追加
+            @param[in]      ptr        生成機
+        *******************************************************************************/
         MyVoid AddMovePattern(MoveCreatorPtr ptr);
 
+        /******************************************************************************/
+        /*! 解放
+        *******************************************************************************/
         MyVoid Release();
 
-        const MyInt GetImage(MyS32 n) const noexcept;
-        const MyInt GetBulletImage(MyS32 n) const noexcept;
-        RKMy(Appear) GetAppear(MyS32 n) const noexcept;
-        RKMy(TurretCreatorPtr) GetTurretPattern(MyS32 n) const noexcept;
-        RKMy(MoveCreatorPtr) GetMovePattern(MyS32 n) const noexcept;
-        const size_t GetAppearCount() const noexcept;
+        /******************************************************************************/
+        /*! 画像ID取得
+            @param[in]      n    番号
+            @return         画像ID
+        *******************************************************************************/
+        const MyInt GetImage(MyS32 n) const noexcept
+        {
+            return m_ImageArray[n];
+        }
+
+        /******************************************************************************/
+        /*! 画像ID取得
+            @param[in]      n    番号
+            @return         画像ID
+        *******************************************************************************/
+        const MyInt GetBulletImage(MyS32 n) const noexcept
+        {
+            return m_BulletImageArray[n];
+        }
+
+        /******************************************************************************/
+        /*! 出現情報取得
+            @param[in]      n    番号
+            @return         出現情報
+        *******************************************************************************/
+        RKMy(Appear) GetAppear(MyS32 n) const noexcept
+        {
+            return m_Placement[n];
+        }
+
+        /******************************************************************************/
+        /*! 砲台生成機取得
+            @param[in]      n    番号
+            @return         砲台生成機
+        *******************************************************************************/
+        RKMy(TurretCreatorPtr) GetTurretPattern(MyS32 n) const noexcept
+        {
+            return m_TurretPatternArray[n];
+        }
+
+        /******************************************************************************/
+        /*! 移動生成機取得
+            @param[in]      n    番号
+            @return         移動生成機
+        *******************************************************************************/
+        RKMy(MoveCreatorPtr) GetMovePattern(MyS32 n) const noexcept
+        {
+            return m_MovePatternArray[n];
+        }
+
+        /******************************************************************************/
+        /*! 出現数取得
+            @param[in]      n    番号
+            @return         出現数
+        *******************************************************************************/
+        const size_t GetAppearCount() const noexcept
+        {
+            return m_Placement.size();
+        }
     };
+
+    /*! ポインタ置き換え */
     using EnemyPlacementPtr = std::shared_ptr<CEnemyPlacement>;
 }
 

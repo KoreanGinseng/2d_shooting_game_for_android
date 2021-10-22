@@ -1,22 +1,25 @@
 /******************************************************************************/
-/*! @file       TurretWait.h
+/*! @file       TurretCounterWait.h
     @brief      弾発射機能装飾クラス定義ファイル
 *******************************************************************************/
 
-#ifndef TURRETWAIT_H
-#define TURRETWAIT_H
+#ifndef TURRETCOUNTERWAIT_H
+#define TURRETCOUNTERWAIT_H
 
-#include "TurretDecorator.h"
+#include "TurretCounter.h"
 
 namespace Shooting2D
 {
     /******************************************************************************/
-    /*! @class CTurretWait
+    /*! @class CTurretCounterWait
         @brief  弾発射機能装飾クラス
     *******************************************************************************/
-    class CTurretWait : public CTurretDecorator
+    class CTurretCounterWait : public CTurretCounter
     {
     protected:
+
+        /*! 発射カウンタ */
+        MyS32 m_ResetCount;
 
         /*! 発射間隔 */
         MyS32 m_Interval;
@@ -28,21 +31,21 @@ namespace Shooting2D
 
         /******************************************************************************/
         /*! コンストラクタ
-            @param[in]      count    間隔
+            @param[in]      count    カウンタ
+            @param[in]      wait     間隔
         *******************************************************************************/
-        explicit CTurretWait(MyS32 count)
-            : CTurretDecorator()
-            , m_Interval(count)
-            , m_Wait(count)
+        explicit CTurretCounterWait(MyS32 count, MyS32 wait)
+            : CTurretCounter()
+            , m_ResetCount(count)
+            , m_Interval(wait)
+            , m_Wait(0)
         {
         }
 
         /******************************************************************************/
         /*! デストラクタ
         *******************************************************************************/
-        virtual ~CTurretWait() override
-        {
-        }
+        virtual ~CTurretCounterWait() override = default;
 
         /******************************************************************************/
         /*! 更新
@@ -50,18 +53,22 @@ namespace Shooting2D
             @param[in]      py    対象の座標Y
             @return         成功 k_Success, 失敗 それ以外
         *******************************************************************************/
-        virtual MyS32 Update(MyFloat px, MyFloat py) override
+        MyS32 Update(MyFloat px, MyFloat py) override
         {
             // ウェイトの減少
             m_Wait--;
+            // ウェイトがある場合待機
             if (m_Wait > 0)
             {
                 return k_failure;
             }
-            // 次の発射までのウェイトを設定
-            m_Wait = m_Interval;
-            // 発射
-            return CTurretDecorator::Update(px, py);
+            MyBool result = CTurretCounter::Update(px, py);
+            if (m_FireCount >= m_ResetCount)
+            {
+                m_FireCount = 0;
+                m_Wait = m_Interval;
+            }
+            return result;
         }
 
         /******************************************************************************/
@@ -70,9 +77,9 @@ namespace Shooting2D
         *******************************************************************************/
         virtual MyBool IsFire() const noexcept override
         {
-            return (m_Wait <= 1 && m_Turret->IsFire());
+            return (m_Wait <= 1 && m_Wait >= 0);
         }
     };
 }
 
-#endif //TURRETWAIT_H
+#endif //TURRETCOUNTERWAIT_H

@@ -1,6 +1,7 @@
-//
-// Created by akasu on 2021/10/06.
-//
+/******************************************************************************/
+/*! @file       CollisionEnemyBullet.h
+    @brief      敵と弾の当たり判定
+*******************************************************************************/
 
 #ifndef COLLISIONENEMYBULLET_H
 #define COLLISIONENEMYBULLET_H
@@ -12,6 +13,10 @@
 
 namespace Shooting2D
 {
+
+    /******************************************************************************/
+    /*! 敵と弾の当たり判定
+    *******************************************************************************/
     template < >
     inline MyVoid CCollisionFunction::Collision<>(CEnemy& enemy, CBullet& bullet)
     {
@@ -32,18 +37,27 @@ namespace Shooting2D
                 .Get<EffectEmitterPtr>("Hit")->Emit(bullet.GetPosX(), bullet.GetPosY());
     }
 
+    /******************************************************************************/
+    /*! 敵と弾の当たり判定
+    *******************************************************************************/
     template < >
     inline MyVoid CCollisionFunction::Collision<>(CBullet& b, CEnemy& e)
     {
         Collision(e, b);
     }
 
+    /******************************************************************************/
+    /*! 敵と弾の当たり判定
+    *******************************************************************************/
     template < >
     inline MyVoid CCollisionFunction::Collision<>(EnemyPtr& e, BulletPtr& b)
     {
         Collision(*e, *b);
     }
 
+    /******************************************************************************/
+    /*! 敵と弾の当たり判定
+    *******************************************************************************/
     template < >
     inline MyVoid CCollisionFunction::Collision<>(BulletPtr& b, EnemyPtr& e)
     {

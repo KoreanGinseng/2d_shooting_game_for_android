@@ -1,6 +1,7 @@
-//
-// Created by akasu on 2021/10/13.
-//
+/******************************************************************************/
+/*! @file       SceneChangeFade.h
+    @brief      シーン変更クラス定義ファイル
+*******************************************************************************/
 
 #ifndef SCENECHANGEFADE_H
 #define SCENECHANGEFADE_H
@@ -10,14 +11,26 @@
 
 namespace Shooting2D
 {
+    /******************************************************************************/
+    /*! @class CSceneChangeEffectFade
+        @brief  シーン変更インターフェース
+    *******************************************************************************/
     class CSceneChangeEffectFade : public ISceneChangeEffect
     {
     private:
+
+        /*! カウンタ */
         MyS32 m_CurrentFrame;
         MyS32 m_EndFrame;
         MyS32 m_PrevBlend;
         MyS32 m_CurrentBlend;
+
     public:
+
+        /******************************************************************************/
+        /*! コンストラクタ
+            @param[in]      t          タイマー
+        *******************************************************************************/
         CSceneChangeEffectFade(MyS32 t)
             : m_CurrentFrame(0)
             , m_EndFrame(t)
@@ -26,8 +39,15 @@ namespace Shooting2D
         {
         }
 
+        /******************************************************************************/
+        /*! デストラクタ
+        *******************************************************************************/
         virtual ~CSceneChangeEffectFade() = default;
 
+        /******************************************************************************/
+        /*! 更新
+            @return         成功 k_Success, 失敗 それ以外
+        *******************************************************************************/
         virtual MyS32 Update() override
         {
             m_CurrentFrame++;
@@ -37,6 +57,14 @@ namespace Shooting2D
             return k_Success;
         }
 
+        /******************************************************************************/
+        /*! 描画
+            @param[in]      prev          前シーン
+            @param[in]      prevImg       前シーン用画像ID
+            @param[in]      current       現在のシーン
+            @param[in]      currentImg    現在のシーン用画像ID
+            @return         成功 k_Success, 失敗 それ以外
+        *******************************************************************************/
         virtual MyS32 Draw(ScenePtr& prev, MyInt prevImg, ScenePtr& current, MyInt currentImg) override
         {
             DxLib::SetDrawScreen(prevImg);
@@ -56,6 +84,10 @@ namespace Shooting2D
             return k_Success;
         }
 
+        /******************************************************************************/
+        /*! シーン終了フラグ
+            @return         シーン終了フラグ
+        *******************************************************************************/
         virtual MyBool IsEnd() const noexcept override
         {
             return m_CurrentFrame >= m_EndFrame;

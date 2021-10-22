@@ -36,10 +36,10 @@ namespace Shooting2D
     /*! SE列挙 */
     enum class SEType
     {
-        Shot,
-        Explosion,
+        Shot,       /*!< 弾発射の音 */
+        Explosion,  /*!< 爆発      */
 
-        Count,
+        Count,      /*!< 列挙定数  */
     };
     /*! SE最大数MyS32アクセス用 */
     constexpr MyS32   k_SECount = ((MyS32)SEType::Count);

@@ -12,11 +12,11 @@
 namespace Shooting2D
 {
 
-    /*! @brief LOG　関連 */
+    /*! LOG　関連 */
     #define MyLOGE(...) __android_log_print(ANDROID_LOG_ERROR, "TAG", __VA_ARGS__)
     #define MyLOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "TAG", __VA_ARGS__)
 
-    /*! @brief 各型名を置き換え */
+    /*! 各型名を置き換え */
     using MyS8        = char;
     using MyS16       = short;
     using MyS32       = long;

@@ -21,7 +21,7 @@ namespace Shooting2D
 
         /*! 利用する画像ID */
         MyInt m_Image;
-        MyInt m_TurretImage;
+        MyInt m_TurretImage[3];
 
         /*! 弾発射用クラス */
         TurretPtr m_Turret[3];

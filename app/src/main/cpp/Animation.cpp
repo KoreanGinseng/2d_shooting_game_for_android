@@ -67,22 +67,3 @@ MyS32 CAnimation::Release()
     m_FrameArray.clear();
     return k_Success;
 }
-
-/******************************************************************************/
-/*! フレーム情報の取得
-    @param[in]      n    取得するフレーム番号
-    @return         成功 k_Success, 失敗 それ以外
-*******************************************************************************/
-RKMy(CAnimation::Frame) CAnimation::GetFrame(MyS32 n) const noexcept
-{
-    return m_FrameArray[n];
-}
-
-/******************************************************************************/
-/*! フレーム数取得
-    @return         フレーム数
-*******************************************************************************/
-size_t CAnimation::GetFrameCount() const noexcept
-{
-    return m_FrameArray.size();
-}

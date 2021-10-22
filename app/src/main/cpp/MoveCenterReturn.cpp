@@ -1,12 +1,19 @@
-//
-// Created by akasu on 2021/10/20.
-//
+/******************************************************************************/
+/*! @file       MoveCenterReturn.cpp
+    @brief      移動クラス実装ファイル
+*******************************************************************************/
 
 #include "MoveCenterReturn.h"
 #include "GameDefine.h"
 
 using namespace Shooting2D;
 
+/******************************************************************************/
+/*! コンストラクタ
+    @param[in]  sx     移動速度X
+    @param[in]  sy     移動速度Y
+    @param[in]  tsx    折り返し移動速度X
+*******************************************************************************/
 CMoveCenterReturn::CMoveCenterReturn(MyFloat sx, MyFloat sy, MyFloat tsx)
      : CMoveSimple(sx, sy)
      , m_TurnSpeedX(tsx)
@@ -14,6 +21,12 @@ CMoveCenterReturn::CMoveCenterReturn(MyFloat sx, MyFloat sy, MyFloat tsx)
 {
 };
 
+/******************************************************************************/
+/*! 更新
+    @param[in,out]  px    移動させる座標X
+    @param[in,out]  py    移動させる座標Y
+    @return         成功 k_Success, 失敗 それ以外
+*******************************************************************************/
 MyS32 CMoveCenterReturn::Update(MyFloat &px, MyFloat &py)
 {
     // 画面半分までは直進する
@@ -25,21 +38,19 @@ MyS32 CMoveCenterReturn::Update(MyFloat &px, MyFloat &py)
     if (!m_bTurn)
     {
         m_bTurn = true;
-        // 移動速度X
-        m_TurnSpeedX = m_SpeedX;
         // 自分のいる位置から反転して帰っていく
         if (px < k_SceneWidth * 0.5f)
         {
             if (m_TurnSpeedX < 0)
             {
-                m_TurnSpeedX = -m_SpeedX;
+                m_TurnSpeedX = -m_TurnSpeedX;
             }
         }
         else
         {
             if (m_TurnSpeedX > 0)
             {
-                m_TurnSpeedX = -m_SpeedX;
+                m_TurnSpeedX = -m_TurnSpeedX;
             }
         }
     }

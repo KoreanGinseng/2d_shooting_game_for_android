@@ -1,6 +1,7 @@
-//
-// Created by akasu on 2021/10/06.
-//
+/******************************************************************************/
+/*! @file       Stage1EnemyPlacement.h
+    @brief      ステージ１の敵配置情報クラス定義ファイル
+*******************************************************************************/
 
 #ifndef STAGE1ENEMYPLACEMENT_H
 #define STAGE1ENEMYPLACEMENT_H
@@ -18,12 +19,28 @@
 
 namespace Shooting2D
 {
+    /******************************************************************************/
+    /*! @class CStage1EnemyPlacement
+        @brief  ステージ１敵情報生成クラス
+    *******************************************************************************/
     class CStage1EnemyPlacement : public IEnemyPlacementCreator
     {
     public:
+
+        /******************************************************************************/
+        /*! コンストラクタ
+        *******************************************************************************/
         CStage1EnemyPlacement() = default;
+
+        /******************************************************************************/
+        /*! デストラクタ
+        *******************************************************************************/
         virtual ~CStage1EnemyPlacement() override = default;
 
+        /******************************************************************************/
+        /*! 敵配置の生成
+            @param[in]      placement    敵配置情報
+        *******************************************************************************/
         MyVoid Create(CEnemyPlacement& placement) override
         {
             // 画像の読み込み
@@ -39,42 +56,42 @@ namespace Shooting2D
             placement.AddBulletImage("image/Bullets/03Bullets.png");
 
             // 弾パターンの登録
-            placement.AddTurretPattern(
+            placement.AddTurretPattern( // 乱射１
                     std::make_shared<CTurretCreatorType2>(
                             "EnemyBullet",
                             0.0f, 0.0f, 0.0f, 5.0f, 0,
                             placement.GetBulletImage(1)
                     )
             );
-            placement.AddTurretPattern(
+            placement.AddTurretPattern( // 乱射２
                     std::make_shared<CTurretCreatorType1>(
                             "EnemyBullet",
                             0.0f, 0.0f, 0.0f, 5.0f, 0,
                             placement.GetBulletImage(0)
                             )
                     );
-            placement.AddTurretPattern(
+            placement.AddTurretPattern( // 待機してから標的へ発射
                     std::make_shared<CTurretCreatorType5>(
                             "EnemyBullet",
                             0.0f, 0.0f, 0.0f, 5.0f, 20,
                             placement.GetBulletImage(4), 240
                             )
                     );
-            placement.AddTurretPattern(
+            placement.AddTurretPattern( // まっすぐ発射
                     std::make_shared<CTurretCreatorTypeStraight>(
                             "EnemyBullet",
                             0.0f, 0.0f, 0.0f, 5.0f, 20,
                             placement.GetBulletImage(3)
                             )
                     );
-            placement.AddTurretPattern(
+            placement.AddTurretPattern( // 標的へ発射
                     std::make_shared<CTurretCreatorType4>(
                             "EnemyBullet",
                             0.0f, 0.0f, 0.0f, 5.0f, 20,
                             placement.GetBulletImage(4)
                             )
                     );
-            placement.AddTurretPattern(
+            placement.AddTurretPattern( // 標的へ乱射
                     std::make_shared<CTurretCreatorType3>(
                             "EnemyBullet",
                             0.0f, 0.0f, 0.0f, 5.0f, 0,
@@ -82,27 +99,27 @@ namespace Shooting2D
                     )
             );
             // 移動パターンの登録
-            placement.AddMovePattern(
+            placement.AddMovePattern( // 直進
                     std::make_shared<CMoveCreatorType1>(
                             0.0f, 2.0f
                             )
                     );
-            placement.AddMovePattern(
+            placement.AddMovePattern( // ジグザグ移動
                     std::make_shared<CMoveCreatorType2>(
                             1.0f, 2.0f, 200.0f, 200.0f
                             )
                     );
-            placement.AddMovePattern(
+            placement.AddMovePattern( // 中央で折り返し移動
                     std::make_shared<CMoveCreatorType3>(
                             0.0f, 2.0f, 2.0f
                             )
                     );
-            placement.AddMovePattern(
+            placement.AddMovePattern( // ジグザグ移動
                     std::make_shared<CMoveCreatorType2>(
                             1.0f, 2.0f, 100.0f, 100.0f
                             )
                     );
-            placement.AddMovePattern(
+            placement.AddMovePattern( // 直進
                     std::make_shared<CMoveCreatorType1>(
                             0.0f, 2.0f
                             )

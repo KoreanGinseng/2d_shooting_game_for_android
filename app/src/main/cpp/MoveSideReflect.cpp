@@ -1,11 +1,19 @@
-//
-// Created by akasu on 2021/10/13.
-//
+/******************************************************************************/
+/*! @file       MoveSideReflect.cpp
+    @brief      移動クラス実装ファイル
+*******************************************************************************/
 
 #include "MoveSideReflect.h"
 
 using namespace Shooting2D;
 
+/******************************************************************************/
+/*! コンストラクタ
+    @param[in]  sx     移動速度X
+    @param[in]  sy     移動速度Y
+    @param[in]  rl     反射座標L
+    @param[in]  rr     反射座標R
+*******************************************************************************/
 CMoveSideReflect::CMoveSideReflect(MyFloat sx, MyFloat sy, MyFloat rl, MyFloat rr)
     : CMoveSimple(sx, sy)
     , m_ReflectLeft(rl)
@@ -21,10 +29,19 @@ CMoveSideReflect::CMoveSideReflect(MyFloat sx, MyFloat sy, MyFloat rl, MyFloat r
     }
 }
 
+/******************************************************************************/
+/*! デストラクタ
+*******************************************************************************/
 CMoveSideReflect::~CMoveSideReflect()
 {
 }
 
+/******************************************************************************/
+/*! 更新
+    @param[in,out]  px    移動させる座標X
+    @param[in,out]  py    移動させる座標Y
+    @return         成功 k_Success, 失敗 それ以外
+*******************************************************************************/
 MyS32 CMoveSideReflect::Update(MyFloat &px, MyFloat &py)
 {
     if (m_OffsetX < 0.0f)

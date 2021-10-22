@@ -1,6 +1,7 @@
-//
-// Created by akasu on 2021/10/06.
-//
+/******************************************************************************/
+/*! @file       CollisionPlayerEnemy.h
+    @brief      プレイヤーと敵の当たり判定定義ファイル
+*******************************************************************************/
 
 #ifndef COLLISIONPLAYERENEMY_H
 #define COLLISIONPLAYERENEMY_H
@@ -12,6 +13,9 @@
 
 namespace Shooting2D
 {
+    /******************************************************************************/
+    /*! プレイヤーと敵の当たり判定
+    *******************************************************************************/
     template < >
     inline MyVoid CCollisionFunction::Collision<>(CPlayer& player, CEnemy& enemy)
     {
@@ -30,18 +34,27 @@ namespace Shooting2D
                 .Get<EffectEmitterPtr>("Explosion")->Emit(player.GetPosX(), player.GetPosY());
     }
 
+    /******************************************************************************/
+    /*! プレイヤーと敵の当たり判定
+    *******************************************************************************/
     template < >
     inline MyVoid CCollisionFunction::Collision<>(CEnemy& e, CPlayer& p)
     {
         Collision(p, e);
     }
 
+    /******************************************************************************/
+    /*! プレイヤーと敵の当たり判定
+    *******************************************************************************/
     template < >
     inline MyVoid CCollisionFunction::Collision<>(CPlayer& p, EnemyPtr& e)
     {
         Collision(p, *e);
     }
 
+    /******************************************************************************/
+    /*! プレイヤーと敵の当たり判定
+    *******************************************************************************/
     template < >
     inline MyVoid CCollisionFunction::Collision<>(EnemyPtr& e, CPlayer& p)
     {

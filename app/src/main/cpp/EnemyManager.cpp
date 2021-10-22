@@ -1,11 +1,15 @@
-//
-// Created by akasu on 2021/10/06.
-//
+/******************************************************************************/
+/*! @file       EnemyManager.cpp
+    @brief      敵管理クラス実装ファイル
+*******************************************************************************/
 
 #include "EnemyManager.h"
 
 using namespace Shooting2D;
 
+/******************************************************************************/
+/*! コンストラクタ
+*******************************************************************************/
 CEnemyManager::CEnemyManager()
     : m_CurrentAppear(0)
     , m_EnemyList()
@@ -13,17 +17,29 @@ CEnemyManager::CEnemyManager()
 {
 }
 
+/******************************************************************************/
+/*! デストラクタ
+*******************************************************************************/
 CEnemyManager::~CEnemyManager()
 {
     Release();
 }
 
+/******************************************************************************/
+/*! 読み込み
+    @param[in]      epc    敵出現情報生成機
+    @return         成功 k_Success, 失敗 それ以外
+*******************************************************************************/
 MyS32 CEnemyManager::Load(EnemyPlacementCreatorPtr epc)
 {
     epc->Create(m_Placement);
     return k_Success;
 }
 
+/******************************************************************************/
+/*! 初期化
+    @return         成功 k_Success, 失敗 それ以外
+*******************************************************************************/
 MyS32 CEnemyManager::Initialize()
 {
     m_CurrentAppear = 0;
@@ -31,6 +47,11 @@ MyS32 CEnemyManager::Initialize()
     return k_Success;
 }
 
+/******************************************************************************/
+/*! 更新
+    @param[in]      scroll    スクロール値
+    @return         成功 k_Success, 失敗 それ以外
+*******************************************************************************/
 MyS32 CEnemyManager::Update(MyFloat scroll)
 {
     // 敵の出現判定
@@ -60,6 +81,10 @@ MyS32 CEnemyManager::Update(MyFloat scroll)
     return k_Success;
 }
 
+/******************************************************************************/
+/*! 描画
+    @return         成功 k_Success, 失敗 それ以外
+*******************************************************************************/
 MyS32 CEnemyManager::Draw()
 {
     for (auto& enemy : m_EnemyList)
@@ -69,19 +94,13 @@ MyS32 CEnemyManager::Draw()
     return k_Success;
 }
 
+/******************************************************************************/
+/*! 解放
+    @return         成功 k_Success, 失敗 それ以外
+*******************************************************************************/
 MyS32 CEnemyManager::Release()
 {
     m_EnemyList.clear();
     m_Placement.Release();
     return k_Success;
-}
-
-EnemyList& CEnemyManager::GetEnemyList()
-{
-    return m_EnemyList;
-}
-
-MyBool CEnemyManager::IsHideAllEnemy()
-{
-    return m_CurrentAppear >= m_Placement.GetAppearCount() && m_EnemyList.size() <= 0;
 }

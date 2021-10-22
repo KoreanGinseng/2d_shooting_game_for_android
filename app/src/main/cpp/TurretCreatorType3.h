@@ -1,6 +1,7 @@
-//
-// Created by akasu on 2021/10/06.
-//
+/******************************************************************************/
+/*! @file       TurretCreatorType3.h
+    @brief      砲台生成機種類3クラス定義ファイル
+*******************************************************************************/
 
 #ifndef TURRETCREATORTYPE3_H
 #define TURRETCREATORTYPE3_H
@@ -9,17 +10,31 @@
 #include "TurretRandomRotater.h"
 #include "TurretPlayerLockon.h"
 #include "TurretCounterReset.h"
-#include "CTurretCounterWait.h"
+#include "TurretCounterWait.h"
 
 namespace Shooting2D
 {
+    /******************************************************************************/
+    /*! @class CTurretCreatorType3
+        @brief  砲台生成機種類3クラス
+    *******************************************************************************/
     class CTurretCreatorType3 : public CTurretCreatorType1
     {
     public:
+        /******************************************************************************/
+        /*! コンストラクタ
+        *******************************************************************************/
         using CTurretCreatorType1::CTurretCreatorType1;
 
+        /******************************************************************************/
+        /*! デストラクタ
+        *******************************************************************************/
         virtual ~CTurretCreatorType3() override = default;
 
+        /******************************************************************************/
+        /*! 砲台の生成
+            @return         生成された砲台ポインタ
+        *******************************************************************************/
         virtual TurretPtr Create() override
         {
             return std::make_shared<CTurretSimple>(m_ListName,

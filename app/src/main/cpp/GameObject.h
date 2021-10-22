@@ -62,46 +62,67 @@ namespace Shooting2D
         /*! 座標Xの取得
             @return         座標X
         *******************************************************************************/
-        MyFloat GetPosX() const noexcept;
+        MyFloat GetPosX() const noexcept
+        {
+            return m_PosX;
+        }
 
         /******************************************************************************/
         /*! 座標Yの取得
             @return         座標Y
         *******************************************************************************/
-        MyFloat GetPosY() const noexcept;
+        MyFloat GetPosY() const noexcept
+        {
+            return m_PosY;
+        }
 
         /******************************************************************************/
         /*! 横幅の取得
             @return         横幅
         *******************************************************************************/
-        MyS32 GetWidth() const noexcept;
+        MyS32 GetWidth() const noexcept
+        {
+            return m_Width;
+        }
 
         /******************************************************************************/
         /*! 高さの取得
             @return         高さ
         *******************************************************************************/
-        MyS32 GetHeight() const noexcept;
+        MyS32 GetHeight() const noexcept
+        {
+            return m_Height;
+        }
 
         /******************************************************************************/
         /*! 判定の半径の取得
             @return         判定の半径
         *******************************************************************************/
-        MyFloat GetRadius() const noexcept;
+        MyFloat GetRadius() const noexcept
+        {
+            return m_Radius;
+        }
 
         /******************************************************************************/
         /*! 表示フラグの取得
             @return         表示フラグ
         *******************************************************************************/
-        MyBool IsShow() const noexcept;
+        MyBool IsShow() const noexcept
+        {
+            return m_bShow;
+        }
 
         /******************************************************************************/
         /*! 表示フラグの設定
             @param[in]      value    設定する値
         *******************************************************************************/
-        MyVoid SetShow(RKMy(MyBool) value);
+        MyVoid SetShow(RKMy(MyBool) value)
+        {
+            m_bShow = value;
+        }
     };
 
-    /*! @brief ポインタ置き換え */
+    /*! ポインタ置き換え */
     using GameObjectPtr   = std::shared_ptr<CGameObject>;
     using GameObjectArray = std::vector<GameObjectPtr>;
     using GameObjectList  = std::list<GameObjectPtr>;

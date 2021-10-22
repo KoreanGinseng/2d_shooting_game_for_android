@@ -30,7 +30,6 @@ namespace Shooting2D
 
         /******************************************************************************/
         /*! コンストラクタ
-         *  [in]
         *******************************************************************************/
         explicit CAnimationList(MyS32 count);
 
@@ -56,13 +55,20 @@ namespace Shooting2D
             @param[in]      n    取得するアニメーションの番号
             @return         アニメーションポインタ
         *******************************************************************************/
-        AnimationPtr GetAnimation(MyS32 n) const noexcept;
+        AnimationPtr GetAnimation(MyS32 n) const noexcept
+        {
+            if (n >= m_AnimationArray.size()) { return nullptr; }
+            return m_AnimationArray[n];
+        }
 
         /******************************************************************************/
         /*! アニメーション数の取得
             @return         アニメーション数
         *******************************************************************************/
-        size_t GetAnimationCount() const noexcept;
+        size_t GetAnimationCount() const noexcept
+        {
+            return m_AnimationArray.size();
+        }
     };
 
     /*! ポインタ置き換え */

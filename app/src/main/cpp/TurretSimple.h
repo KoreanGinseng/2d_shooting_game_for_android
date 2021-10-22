@@ -1,6 +1,7 @@
-//
-// Created by akasu on 2021/10/05.
-//
+/******************************************************************************/
+/*! @file       TurretSimple.h
+    @brief      シンプルな弾発射処理クラス定義ファイル
+*******************************************************************************/
 
 #ifndef TURRETSIMPLE_H
 #define TURRETSIMPLE_H
@@ -9,41 +10,137 @@
 
 namespace Shooting2D
 {
+
+    /******************************************************************************/
+    /*! @class CTurretSimple
+        @brief  シンプルな弾発射処理クラス
+    *******************************************************************************/
     class CTurretSimple : public ITurret
     {
     protected:
+        /*! 登録リスト名 */
         std::string m_listName;
 
+        /*! オフセット位置 */
         MyFloat m_OffsetX;
         MyFloat m_OffsetY;
+
+        /*! 弾の移動速度 */
         MyFloat m_SpeedX;
         MyFloat m_SpeedY;
 
-        MyS32 m_Interval;
+        /*! 発射間隔 */
         MyS32 m_Wait;
 
+        /*! 発射ウェイト */
+        MyS32 m_Interval;
+
+        /*! 幅と高さ */
         MyS32 m_ImageWidth;
         MyS32 m_ImageHeight;
 
+        /*! 利用する画像ID */
         MyInt m_BulletImage;
 
     public:
 
-        CTurretSimple(RKMyString list, MyFloat offx, MyFloat offy, MyFloat sx, MyFloat sy, MyS32 wait, MyInt img);
+        /******************************************************************************/
+        /*! コンストラクタ
+            @param[in]      list    登録リスト名
+            @param[in]      offx    オフセット位置X
+            @param[in]      offy    オフセット位置Y
+            @param[in]      sx      弾スピードX
+            @param[in]      sy      弾スピードY
+            @param[in]      wait    発射間隔
+            @param[in]      img     弾画像ID
+        *******************************************************************************/
+        explicit CTurretSimple(RKMyString list, MyFloat offx, MyFloat offy, MyFloat sx, MyFloat sy, MyS32 wait, MyInt img);
 
+        /******************************************************************************/
+        /*! デストラクタ
+        *******************************************************************************/
         virtual ~CTurretSimple() override;
 
+        /******************************************************************************/
+        /*! タレットの初期化
+            @return         成功 k_Success, 失敗 それ以外
+        *******************************************************************************/
         virtual MyS32 Initialize() override;
 
+        /******************************************************************************/
+        /*! タレットの更新
+            @param[in]      px    対象の座標X
+            @param[in]      py    対象の座標Y
+            @return         成功 k_Success, 失敗 それ以外
+        *******************************************************************************/
         virtual MyS32 Update(MyFloat px, MyFloat py) override;
 
-        virtual MyFloat GetOffsetX() const noexcept override;
-        virtual MyFloat GetOffsetY() const noexcept override;
-        virtual MyFloat GetSpeedX() const noexcept override;
-        virtual MyFloat GetSpeedY() const noexcept override;
-        virtual MyVoid SetOffset(MyFloat sx, MyFloat sy) override;
-        virtual MyVoid SetSpeed(MyFloat sx, MyFloat sy) override;
-        virtual MyBool IsFire() const noexcept override;
+        /******************************************************************************/
+        /*! オフセット位置Xの取得
+            @return         オフセット位置X
+        *******************************************************************************/
+        virtual MyFloat GetOffsetX() const noexcept override
+        {
+            return m_OffsetX;
+        }
+
+        /******************************************************************************/
+        /*! オフセット位置Yの取得
+            @return         オフセット位置Y
+        *******************************************************************************/
+        virtual MyFloat GetOffsetY() const noexcept override
+        {
+            return m_OffsetY;
+        }
+
+        /******************************************************************************/
+        /*! スピードXの取得
+            @return         スピードX
+        *******************************************************************************/
+        virtual MyFloat GetSpeedX() const noexcept override
+        {
+            return m_SpeedX;
+        }
+
+        /******************************************************************************/
+        /*! スピードYの取得
+            @return         スピードY
+        *******************************************************************************/
+        virtual MyFloat GetSpeedY() const noexcept override
+        {
+            return m_SpeedY;
+        }
+
+        /******************************************************************************/
+        /*! オフセット位置の設定
+            @param[in]      sx    設定するオフセット位置Ｘ
+            @param[in]      sy    設定するオフセット位置Ｙ
+        *******************************************************************************/
+        virtual MyVoid SetOffset(MyFloat sx, MyFloat sy) override
+        {
+            m_OffsetX = sx;
+            m_OffsetY = sy;
+        }
+
+        /******************************************************************************/
+        /*! スピードの設定
+            @param[in]      sx    設定するスピードＸ
+            @param[in]      sy    設定するスピードＹ
+        *******************************************************************************/
+        virtual MyVoid SetSpeed(MyFloat sx, MyFloat sy) override
+        {
+            m_SpeedX = sx;
+            m_SpeedY = sy;
+        }
+
+        /******************************************************************************/
+        /*! このフレームでの発射判定
+            @return         発射フラグ
+        *******************************************************************************/
+        virtual MyBool IsFire() const noexcept override
+        {
+            return m_Wait <= 1;
+        }
     };
 }
 

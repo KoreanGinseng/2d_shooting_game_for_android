@@ -1,20 +1,31 @@
-//
-// Created by akasu on 2021/10/06.
-//
+/******************************************************************************/
+/*! @file       TurretArray.cpp
+    @brief      タレット配列管理処理クラス実装ファイル
+*******************************************************************************/
 
 #include "TurretArray.h"
 
 using namespace Shooting2D;
 
+/******************************************************************************/
+/*! コンストラクタ
+*******************************************************************************/
 CTurretArray::CTurretArray()
     : m_TurretArray()
 {
 }
 
+/******************************************************************************/
+/*! デストラクタ
+*******************************************************************************/
 CTurretArray::~CTurretArray()
 {
 }
 
+/******************************************************************************/
+/*! 初期化
+    @return         成功 k_Success, 失敗 それ以外
+*******************************************************************************/
 MyS32 CTurretArray::Initialize()
 {
     MyS32 result = k_failure;
@@ -25,6 +36,12 @@ MyS32 CTurretArray::Initialize()
     return result;
 }
 
+/******************************************************************************/
+/*! 更新
+    @param[in]      px    対象の座標X
+    @param[in]      py    対象の座標Y
+    @return         成功 k_Success, 失敗 それ以外
+*******************************************************************************/
 MyS32 CTurretArray::Update(MyFloat px, MyFloat py)
 {
     MyS32 result = k_failure;
@@ -35,26 +52,11 @@ MyS32 CTurretArray::Update(MyFloat px, MyFloat py)
     return result;
 }
 
-MyFloat CTurretArray::GetOffsetX() const noexcept
-{
-    return m_TurretArray[0]->GetOffsetX();
-}
-
-MyFloat CTurretArray::GetOffsetY() const noexcept
-{
-    return m_TurretArray[0]->GetOffsetY();
-}
-
-MyFloat CTurretArray::GetSpeedX() const noexcept
-{
-    return m_TurretArray[0]->GetSpeedX();
-}
-
-MyFloat CTurretArray::GetSpeedY() const noexcept
-{
-    return m_TurretArray[0]->GetSpeedY();
-}
-
+/******************************************************************************/
+/*! オフセット位置の設定
+    @param[in]      sx    設定するオフセット位置Ｘ
+    @param[in]      sy    設定するオフセット位置Ｙ
+*******************************************************************************/
 MyVoid CTurretArray::SetOffset(MyFloat sx, MyFloat sy)
 {
     for (auto& turret : m_TurretArray)
@@ -63,15 +65,15 @@ MyVoid CTurretArray::SetOffset(MyFloat sx, MyFloat sy)
     }
 }
 
+/******************************************************************************/
+/*! スピードの設定
+    @param[in]      sx    設定するスピードＸ
+    @param[in]      sy    設定するスピードＹ
+*******************************************************************************/
 MyVoid CTurretArray::SetSpeed(MyFloat sx, MyFloat sy)
 {
     for (auto& turret : m_TurretArray)
     {
         turret->SetSpeed(sx, sy);
     }
-}
-
-MyBool CTurretArray::IsFire() const noexcept
-{
-    return m_TurretArray[0]->IsFire();
 }
