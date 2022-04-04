@@ -349,5 +349,13 @@ MyS32 CGameScene::Release()
     // スコア削除
     CSingletonBlackboard<ScorePtr>::GetInstance().Get<ScorePtr>()->Delete("Score");
 
+    SEService::Release();
+    CSingletonBlackboard<CPlayer>::Release();
+    CSingletonBlackboard<BulletList>::Release();
+    CSingletonBlackboard<CEnemyManager>::Release();
+    CSingletonBlackboard<EffectList>::Release();
+    CSingletonBlackboard<EffectEmitterPtr>::Release();
+    CSingletonBlackboard<ScorePtr>::Release();
+
     return k_Success;
 }

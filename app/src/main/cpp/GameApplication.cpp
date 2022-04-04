@@ -47,6 +47,8 @@ MyS32 CGameApplication::Draw()
 *******************************************************************************/
 MyS32 CGameApplication::Release()
 {
-    return m_SceneManager->Release();
+    m_SceneManager->Release();
+    SceneChangerService::Release();
+    return k_Success;
 }
 
